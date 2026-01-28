@@ -1,62 +1,52 @@
-body, html { margin: 0; padding: 0; font-family: -apple-system, sans-serif; background: #fff; overflow-x: hidden; }
+body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; overflow-x: hidden; }
 
-.header-violeta { 
-    background: #362FC1; width: 100%; height: 70px; 
-    display: flex; align-items: center; justify-content: center; 
-    position: fixed; top: 0; z-index: 1000; 
-}
+.header-violeta { background: #362FC1; width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; position: fixed; top: 0; z-index: 1000; }
 .logo-app { height: 35px; filter: brightness(0) invert(1); }
 
-.view { 
-    position: absolute; width: 100%; min-height: 100vh; 
-    display: flex; flex-direction: column; align-items: center; 
-    padding: 90px 20px 40px; box-sizing: border-box; 
-    opacity: 0; pointer-events: none; transition: 0.3s; 
-}
+.view { position: absolute; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 90px 20px 40px; box-sizing: border-box; opacity: 0; pointer-events: none; transition: 0.3s; }
 .view.active { opacity: 1; pointer-events: all; }
 
-.dni-visual-box { 
-    position: relative; width: 100%; max-width: 340px; 
-    aspect-ratio: 1.58 / 1; background: #eee; 
-    border-radius: 10px; overflow: hidden; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; 
-}
-.dni-fondo-img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.dni-visual-box { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1.58 / 1; background: #eee; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.dni-fondo-img { width: 100%; height: 100%; object-fit: cover; }
 .datos-superpuestos { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
-.txt-dni { position: absolute; color: #333; font-size: 14px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
-
-/* --- CALIBRACIÓN SOLICITADA --- */
-.pos-foto { 
+/* ESTILO GENERAL DE TEXTOS (BASADO EN TU INSPECCIÓN) */
+.txt-dni { 
     position: absolute; 
-    top: 22%;    /* Posición pedida */
-    left: 6%;    /* Posición pedida */
-    width: 23%;  /* Ancho pedido */
-    height: 48%; /* Alto pedido */
-    object-fit: cover; 
+    color: #000; 
+    font-family: Arial, sans-serif; 
+    font-weight: 400; 
+    text-transform: uppercase; 
+    white-space: nowrap;
 }
 
-.pos-apellido { top: 20%; left: 30%; } /* Ajustado a top 20% y left 30% */
-.pos-nombre   { top: 30%; left: 30%; }
-.pos-sexo     { top: 40%; left: 30%; }
-.pos-nac      { top: 50%; left: 30%; }
-.pos-emi      { top: 60%; left: 30%; }
-.pos-ven      { top: 70%; left: 30%; } /* Vencimiento en top 70% */
+/* CALIBRACIÓN DE POSICIONES Y ESTILOS ESPECÍFICOS */
+.pos-foto { position: absolute; top: 22%; left: 6%; width: 23%; height: 48%; object-fit: cover; }
 
+/* Fechas: 21.99px y 0.2px spacing */
+.pos-apellido { top: 20%; left: 30%; font-size: 16px; } 
+.pos-nombre   { top: 30%; left: 30%; font-size: 16px; }
+.pos-sexo     { top: 40%; left: 30%; font-size: 16px; }
+
+.pos-nac, .pos-emi, .pos-ven { 
+    font-size: 16px; /* Escalado para móvil, equivale al 21.99px de PC */
+    letter-spacing: .2px; 
+}
+.pos-nac { top: 50%; left: 30%; }
+.pos-emi { top: 60%; left: 30%; }
+.pos-ven { top: 70%; left: 30%; }
+
+/* DNI Número: 35.52px, Negrita y -0.5px spacing */
 .pos-dni { 
-    top: 80%; 
-    left: 30%; 
-    font-size: 17px; 
-    letter-spacing: 0.5px; /* Interlineado de 0.5px */
+    top: 80%; left: 30%; 
+    font-size: 22px; 
+    font-weight: 600; 
+    letter-spacing: -0.5px; 
 }
 
 .pos-firma { position: absolute; bottom: 22%; right: 12%; width: 22%; filter: grayscale(1); }
-/* --- FIN CALIBRACIÓN --- */
 
+/* UI */
 input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
-.grid-2 { display: flex; gap: 8px; }
 .btn-entrar { background: #362FC1; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-.firma-box { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin: 10px 0; background: #fff; }
-canvas { width: 100%; height: 80px; border-bottom: 1px solid #362FC1; touch-action: none; }
-.btn-clear { background: #eee; border: none; padding: 5px 10px; font-size: 11px; margin-top: 5px; cursor: pointer; }
 .btn-foto-local { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 10px; }
