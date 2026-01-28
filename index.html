@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Argentina</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,28 +13,42 @@
         <img src="https://id.argentina.gob.ar/static/img/miargentina.svg" alt="Logo Mi Argentina" class="logo-app">
     </div>
 
-    <div id="pantalla-login" class="view">
-        <div class="form-container">
-            <h2 class="main-title">Inicia sesión</h2>
-            <input type="email" id="login-email" placeholder="Correo electrónico">
-            <input type="password" id="login-pass" placeholder="Contraseña">
-            <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
-            <div class="footer-links">
-                <p><a href="#">¿Olvidaste tu contraseña?</a></p>
-                <p>¿No tienes cuenta? <a href="#" onclick="mostrarRegistro()">Registrarse</a></p>
+    <div id="main-container">
+        
+        <div id="pantalla-login" class="view active">
+            <div class="form-container">
+                <h2 class="main-title">Inicia sesión</h2>
+                <input type="email" id="login-email" placeholder="Correo electrónico">
+                <input type="password" id="login-pass" placeholder="Contraseña">
+                <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
+                <div class="footer-links">
+                    <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+                    <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="pantalla-registro" class="view" style="display:none;">
-        <div class="form-container">
-            <h2 class="main-title">Registro</h2>
-            <input type="email" id="reg-email" placeholder="Correo electrónico">
-            <input type="password" id="reg-pass" placeholder="Contraseña (mín. 6)">
-            <input type="text" id="reg-nombre" placeholder="Nombre completo">
-            <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
-            <p class="footer-links"><a href="#" onclick="mostrarLogin()">Volver</a></p>
+        <div id="pantalla-registro" class="view">
+            <div class="form-container">
+                <h2 class="main-title">Registro</h2>
+                <input type="email" id="reg-email" placeholder="Correo electrónico">
+                <input type="password" id="reg-pass" placeholder="Contraseña (mín. 6)">
+                <input type="text" id="reg-nombre" placeholder="Nombre completo">
+                <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
+                <p class="footer-links"><a href="javascript:void(0)" onclick="irALogin()">Volver al inicio</a></p>
+            </div>
         </div>
+
+        <div id="pantalla-home" class="view">
+            <div class="form-container">
+                <h2 class="main-title">Mis Documentos</h2>
+                <div class="content-placeholder">
+                    <p>Bienvenido. Aquí aparecerán tus documentos próximamente.</p>
+                </div>
+                <button class="btn-entrar" style="background-color: #8e8e8e;" onclick="location.reload()">CERRAR SESIÓN</button>
+            </div>
+        </div>
+
     </div>
 
     <script type="module" src="script.js"></script>
