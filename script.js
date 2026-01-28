@@ -14,38 +14,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// FUNCIONES DE NAVEGACIÓN
-window.mostrarRegistro = () => {
+// FUNCIONES PARA CAMBIAR DE PÁGINA (CAPAS)
+window.mostrarRegistro = function() {
     document.getElementById('pantalla-login').style.display = 'none';
     document.getElementById('pantalla-registro').style.display = 'flex';
 }
 
-window.mostrarLogin = () => {
+window.mostrarLogin = function() {
     document.getElementById('pantalla-registro').style.display = 'none';
     document.getElementById('pantalla-login').style.display = 'flex';
 }
 
-// LÓGICA DE FIREBASE
-window.crearCuenta = async () => {
+// LÓGICA DE REGISTRO
+window.crearCuenta = async function() {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pin').value;
-    const nombre = document.getElementById('reg-nombre').value;
 
     if(pass.length < 6) {
-        alert("El PIN debe tener al menos 6 números por seguridad de Google.");
+        alert("Google exige que el PIN sea de al menos 6 números.");
         return;
     }
 
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        alert("¡Cuenta creada para " + nombre + "! Ahora inicia sesión.");
-        mostrarLogin();
-    } catch (error) {
-        alert("Error: " + error.message);
+        alert("¡Cuenta creada! Ahora logueate.");
+        window.mostrarLogin();
+    } catch (e) {
+        alert("Error al registrar: " + e.message);
     }
-};
+}
 
-window.intentarEntrar = async () => {
+// LÓGICA DE ENTRAR
+window.intentarEntrar = async function() {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-pass').value;
 
@@ -53,16 +53,17 @@ window.intentarEntrar = async () => {
         await signInWithEmailAndPassword(auth, email, pass);
         document.getElementById('pantalla-login').style.display = 'none';
         document.getElementById('pantalla-app').style.display = 'block';
-    } catch (error) {
-        alert("Correo o PIN incorrectos.");
+    } catch (e) {
+        alert("Email o PIN incorrectos.");
     }
-};
+}
 
-// MANEJO DE FOTO
-document.getElementById('input-foto').addEventListener('change', function(e) {
-    const reader = new FileReader();
-    reader.onload = function() {
-        document.getElementById('foto-mostrada').src = reader.result;
-    }
-    reader.readAsDataURL(e.target.files[0]);
-});
+// LÓGICA DE FOTO
+const inputFoto = document.getElementById('input-foto');
+if(inputFoto) {
+    inputFoto.addEventListener('change', function(e) {
+        const reader = new FileReader();
+        reader.onload = () => document.getElementById('foto-mostrada').src = reader.result;
+        reader.readAsAsDataURL(e.target.files[0]);
+    });
+}
