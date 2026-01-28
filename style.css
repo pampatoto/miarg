@@ -15,7 +15,6 @@ body, html { margin: 0; padding: 0; font-family: -apple-system, sans-serif; back
 }
 .view.active { opacity: 1; pointer-events: all; }
 
-/* CONTENEDOR DNI */
 .dni-visual-box { 
     position: relative; width: 100%; max-width: 340px; 
     aspect-ratio: 1.58 / 1; background: #eee; 
@@ -25,37 +24,39 @@ body, html { margin: 0; padding: 0; font-family: -apple-system, sans-serif; back
 .dni-fondo-img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .datos-superpuestos { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
-/* ESTILO DE TEXTO SEGÚN TU INSPECTOR */
-.txt-dni { 
+.txt-dni { position: absolute; color: #333; font-size: 14px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
+
+/* --- CALIBRACIÓN SOLICITADA --- */
+.pos-foto { 
     position: absolute; 
-    color: #333; 
-    font-size: 15px; /* Tamaño base ajustado para móvil */
-    font-weight: bold; 
-    text-transform: uppercase; 
-    white-space: nowrap;
+    top: 22%;    /* Posición pedida */
+    left: 6%;    /* Posición pedida */
+    width: 23%;  /* Ancho pedido */
+    height: 48%; /* Alto pedido */
+    object-fit: cover; 
 }
 
-/* POSICIONES EXACTAS BASADAS EN TU CAPTURA */
-.pos-foto { position: absolute; top: 22%; left: 6%; width: 28%; height: 50%; object-fit: cover; }
+.pos-apellido { top: 20%; left: 30%; } /* Ajustado a top 20% y left 30% */
+.pos-nombre   { top: 30%; left: 30%; }
+.pos-sexo     { top: 40%; left: 30%; }
+.pos-nac      { top: 50%; left: 30%; }
+.pos-emi      { top: 60%; left: 30%; }
+.pos-ven      { top: 70%; left: 30%; } /* Vencimiento en top 70% */
 
-/* Datos con el tamaño de fuente de 21.99px escalado a % */
-.pos-apellido { top: 18%; left: 38%; font-size: 16px; }
-.pos-nombre   { top: 28%; left: 38%; font-size: 16px; }
-.pos-sexo     { top: 38%; left: 38%; }
-
-/* Fecha de Nacimiento (La que pediste ajustar especialmente) */
-.pos-nac      { 
-    top: 48.5%; /* Según tu flecha azul en la captura */
-    left: 38%; 
-    font-size: 16px; 
+.pos-dni { 
+    top: 80%; 
+    left: 30%; 
+    font-size: 17px; 
+    letter-spacing: 0.5px; /* Interlineado de 0.5px */
 }
 
-.pos-emi      { top: 60%; left: 38%; }
-.pos-dni      { top: 78%; left: 38%; font-size: 18px; letter-spacing: 1px; }
+.pos-firma { position: absolute; bottom: 22%; right: 12%; width: 22%; filter: grayscale(1); }
+/* --- FIN CALIBRACIÓN --- */
 
-.pos-firma    { position: absolute; bottom: 22%; right: 10%; width: 24%; filter: grayscale(1) contrast(1.2); }
-
-/* UI DE EDICIÓN */
-input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
 .grid-2 { display: flex; gap: 8px; }
 .btn-entrar { background: #362FC1; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+.firma-box { border: 1px solid #ccc; border-radius: 8px; padding: 10px; margin: 10px 0; background: #fff; }
+canvas { width: 100%; height: 80px; border-bottom: 1px solid #362FC1; touch-action: none; }
+.btn-clear { background: #eee; border: none; padding: 5px 10px; font-size: 11px; margin-top: 5px; cursor: pointer; }
+.btn-foto-local { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 10px; }
