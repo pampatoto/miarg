@@ -1,42 +1,39 @@
-body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sans-serif; background: #fff; color: #555; }
+body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sans-serif; background: #fff; }
 .view { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
-.form-container { width: 100%; max-width: 300px; text-align: center; }
+.form-container { width: 100%; max-width: 320px; text-align: center; }
 
 .main-title { 
-    font-size: 20px; 
-    font-weight: 500; 
-    color: #8e8e8e; 
+    font-size: 20px; font-weight: 500; color: #8e8e8e; 
     margin: 10px 40px 30px; 
 }
 
-/* ESTILOS DE LOS INPUTS PERSONALIZADOS */
+/* CAJAS DE TEXTO ESTILO IMAGEN */
 input { 
-    width: 100%; 
-    font-size: 16px; 
-    padding: 9px 0 7px 8px; 
+    width: 100%; font-size: 16px; 
+    padding: 12px 0 12px 10px; 
     background-color: #fafafa; 
-    border: 2px solid red; /* Borde de error solicitado */
-    border-radius: 8px; /* Redondeado suave para que coincida con la estética */
-    margin-bottom: 15px; 
-    outline: none; 
-    box-sizing: border-box; 
-    color: #333;
+    border: 1px solid #ccc; /* Borde inicial gris */
+    border-radius: 4px; 
+    margin-bottom: 20px; 
+    outline: none; box-sizing: border-box; color: #333;
+    transition: border 0.3s;
 }
 
-.btn-lila { background: #b7b1ff; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(183,177,255,0.3); }
-.footer-links { margin-top: 20px; font-size: 14px; }
-.footer-links a { color: #5555ff; text-decoration: none; }
-hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+/* Colores de validación */
+input.invalid { border: 2px solid red !important; }
+input.valid { border: 2px solid #4CAF50 !important; }
 
-/* Estilo Credencial Mi Argentina */
-.header-azul { background: #0072bb; color: #fff; padding: 50px 20px 15px; position: fixed; top: 0; width: 100%; font-weight: bold; z-index: 100; box-sizing: border-box; }
+.btn-lila { 
+    background: #b7b1ff; color: #fff; border: none; width: 100%; 
+    padding: 16px; border-radius: 12px; font-weight: bold; 
+    font-size: 15px; cursor: pointer; text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(183,177,255,0.3); 
+}
+
+.footer-links { margin-top: 20px; font-size: 13px; color: #5555ff; }
+.footer-links a { text-decoration: none; color: inherit; }
+
+/* Estilo Credencial */
+.header-azul { background: #0072bb; color: #fff; padding: 50px 20px 15px; position: fixed; top: 0; width: 100%; font-weight: bold; z-index: 100; }
 .app-view { background: #f2f5f7; padding-top: 100px; }
 .dni-card { background: #fff; width: 100%; max-width: 340px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); overflow: hidden; }
-.dni-top { background: #004d80; color: #fff; font-size: 10px; padding: 8px; text-align: center; font-weight: bold; }
-.dni-body { padding: 20px; display: flex; gap: 15px; }
-.foto-perfil { width: 100px; height: 130px; background: #eee; border: 1px solid #ddd; overflow: hidden; flex-shrink: 0; }
-.foto-perfil img { width: 100%; height: 100%; object-fit: cover; }
-.dni-datos { text-align: left; }
-.dni-datos label { font-size: 9px; color: #0072bb; font-weight: bold; display: block; }
-.dni-datos h1 { font-size: 16px; margin: 0 0 10px 0; color: #333; }
-.dni-datos p { font-size: 14px; margin: 0 0 10px 0; color: #333; }
