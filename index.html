@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Argentina</title>
-    <link rel="icon" type="image/png" href="logito.png">
-    <link rel="apple-touch-icon" href="logito.png">
+    
+    <link rel="icon" type="image/png" href="logito.png?v=1.1">
+    <link rel="apple-touch-icon" href="logito.png?v=1.1">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="header-violeta">
         <div id="header-inicio" class="header-content">
-            <img src="logo.png" alt="Logo" class="logo-app">
+            <img src="logo.png?v=1.1" alt="Logo" class="logo-app">
         </div>
         <div id="header-registro" class="header-content" style="display:none;">
             <button class="btn-back" onclick="irALogin()">←</button>
@@ -33,35 +37,29 @@
 
         <div id="pantalla-registro" class="view">
             <div class="form-container">
-                
                 <div class="dni-visual-box">
-                    <img src="dni.png" class="dni-fondo-img">
+                    <img src="dni.png?v=1.1" class="dni-fondo-img">
                     
                     <div class="datos-superpuestos">
                         <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
-                        
                         <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
                         <div class="txt-dni pos-nombre" id="txt-nombre">NOMBRE</div>
                         <div class="txt-dni pos-dni" id="txt-dni">00.000.000</div>
                         <div class="txt-dni pos-nac" id="txt-nac">01 ENE 2007</div>
                         <div class="txt-dni pos-emi" id="txt-emi">19 ENE 2021</div>
                         <div class="txt-dni pos-sexo" id="txt-sexo">M</div>
-                        
                         <img id="img-firma-preview" class="pos-firma">
                     </div>
                 </div>
 
-                <p class="instruccion">Completa los datos para tu DNI</p>
-                
+                <p class="instruccion">Completa los datos</p>
                 <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
                 <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
                 <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
-                
                 <div class="grid-2">
-                    <input type="text" id="in-nac" placeholder="Nacimiento (01 ENE 2007)" oninput="actualizar()">
-                    <input type="text" id="in-emi" placeholder="Emisión (19 ENE 2021)" oninput="actualizar()">
+                    <input type="text" id="in-nac" placeholder="Nacimiento" oninput="actualizar()">
+                    <input type="text" id="in-emi" placeholder="Emisión" oninput="actualizar()">
                 </div>
-
                 <select id="in-sexo" onchange="actualizar()">
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
@@ -79,7 +77,6 @@
                 <hr>
                 <input type="email" id="reg-email" placeholder="Email">
                 <input type="password" id="reg-pass" placeholder="Contraseña (mín 6)">
-                
                 <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
             </div>
         </div>
