@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mi Argentina Personal</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="pantalla-pin" class="view">
+        <div class="login-box">
+            <img src="https://www.argentina.gob.ar/profiles/argentinagobar/themes/argentinagobar/logo.svg" alt="Logo" class="logo">
+            <h2>Ingresá tu código</h2>
+            <input type="password" id="pin-input" pattern="\d*" inputmode="numeric" maxlength="4" placeholder="••••">
+            <button onclick="verificarPin()">INGRESAR</button>
+        </div>
+    </div>
+
+    <div id="pantalla-app" class="view" style="display:none;">
+        <div class="nav-bar">
+            <span>Mi Perfil</span>
+            <button onclick="cerrarSesion()">Salir</button>
+        </div>
+
+        <div class="card">
+            <div class="foto-container" onclick="document.getElementById('input-foto').click()">
+                <img id="foto-perfil" src="https://via.placeholder.com/150" alt="Tu Foto">
+                <div class="btn-edit">Cambiar Foto</div>
+            </div>
+            <input type="file" id="input-foto" style="display:none" accept="image/*">
+
+            <div class="info">
+                <label>NOMBRE Y APELLIDO</label>
+                <h1 contenteditable="true" id="campo-nombre">Toca para editar</h1>
+                
+                <label>PROFESIÓN / ESTUDIOS</label>
+                <p contenteditable="true" id="campo-profesion">Toca para editar</p>
+                
+                <label>DOCUMENTO</label>
+                <p contenteditable="true">00.000.000</p>
+            </div>
+            <button class="save-btn" onclick="guardarLocal()">GUARDAR EN DISPOSITIVO</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
