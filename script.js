@@ -38,33 +38,22 @@ window.cargarFoto = (e) => {
     reader.readAsDataURL(e.target.files[0]);
 };
 
-// Firma
 const canvas = document.getElementById('canvas-firma');
 const ctx = canvas.getContext('2d');
-let dibujando = false;
-
-const start = (e) => { e.preventDefault(); dibujando = true; draw(e); };
-const stop = () => { dibujando = false; ctx.beginPath(); document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
+let dib = false;
+const start = (e) => { e.preventDefault(); dib = true; draw(e); };
+const stop = () => { dib = false; ctx.beginPath(); document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
 const draw = (e) => {
-    if (!dibujando) return;
+    if (!dib) return;
     ctx.lineWidth = 2; ctx.strokeStyle = '#000';
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left;
     const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top;
     ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
 };
-
-canvas.addEventListener('mousedown', start);
-canvas.addEventListener('touchstart', start);
-window.addEventListener('mouseup', stop);
-window.addEventListener('touchend', stop);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('touchmove', draw);
-
-window.limpiarFirma = () => { 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
-    document.getElementById('img-firma-preview').src = ""; 
-};
+canvas.addEventListener('mousedown', start); canvas.addEventListener('touchstart', start);
+window.addEventListener('mouseup', stop); window.addEventListener('touchend', stop);
+canvas.addEventListener('mousemove', draw); canvas.addEventListener('touchmove', draw);
 
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
@@ -72,7 +61,7 @@ window.crearCuenta = async () => {
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
         alert("¡Registro exitoso!");
-        location.reload();
+        navegar('pantalla-home');
     } catch (e) { alert("Error al registrar"); }
 };
 
@@ -81,6 +70,6 @@ window.intentarEntrar = async () => {
     const pass = document.getElementById('login-pass').value;
     try {
         await signInWithEmailAndPassword(auth, email, pass);
-        alert("¡Ingreso exitoso!");
+        navegar('pantalla-home');
     } catch (e) { alert("Datos incorrectos"); }
 };
