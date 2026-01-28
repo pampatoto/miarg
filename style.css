@@ -14,12 +14,12 @@ body, html { margin: 0; padding: 0; font-family: -apple-system, sans-serif; back
     position: absolute; width: 100%; min-height: 100vh; 
     display: flex; flex-direction: column; align-items: center; 
     padding: 90px 20px 40px; box-sizing: border-box; 
-    opacity: 0; pointer-events: none; transition: opacity 0.3s ease; 
+    opacity: 0; pointer-events: none; transition: 0.4s; 
 }
 .view.active { opacity: 1; pointer-events: all; }
 .form-container { width: 100%; max-width: 340px; text-align: center; }
 
-/* --- BLOQUE DE CALIBRACIÓN --- */
+/* --- SECCIÓN DE CALIBRACIÓN DEL DNI --- */
 .dni-visual-box { 
     position: relative; width: 100%; max-width: 340px; 
     aspect-ratio: 1.58 / 1; background: #eee; 
@@ -31,7 +31,7 @@ body, html { margin: 0; padding: 0; font-family: -apple-system, sans-serif; back
 
 .txt-dni { position: absolute; color: #333; font-size: 11px; font-weight: bold; text-transform: uppercase; white-space: nowrap; }
 
-/* Ajustá estos % para mover los datos definitivamente */
+/* Ajusta los % para mover las letras sobre la imagen */
 .pos-foto { position: absolute; top: 28%; left: 7.5%; width: 26%; height: 48%; object-fit: cover; }
 .pos-apellido { top: 16%; left: 39%; }
 .pos-nombre   { top: 27%; left: 39%; }
