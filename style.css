@@ -1,46 +1,79 @@
-body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; height: 100vh; overflow: hidden; }
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-.header-violeta { 
-    background: #362FC1; width: 100%; height: 65px; 
-    display: flex; align-items: center; justify-content: center; 
-    position: fixed; top: 0; z-index: 1000; 
-}
-.logo-app { height: 30px; filter: brightness(0) invert(1); }
+const firebaseConfig = {
+  apiKey: "AIzaSyDntkOBeYnBVBE0DLZ0vPkO2LrLdG-WqUQ",
+  authDomain: "miarg-proyecto.firebaseapp.com",
+  projectId: "miarg-proyecto",
+  storageBucket: "miarg-proyecto.firebasestorage.app",
+  messagingSenderId: "883813445397",
+  appId: "1:883813445397:web:53f323a000aeb41695431c"
+};
 
-/* VISTAS FIJAS Y CENTRADAS */
-.view { 
-    position: absolute; width: 100%; height: 100%; 
-    display: none; flex-direction: column; align-items: center; justify-content: center; 
-    padding: 20px; box-sizing: border-box; 
-}
-.view.active { display: flex; }
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-.form-container { 
-    width: 100%; max-width: 320px; 
-    display: flex; flex-direction: column; align-items: center; 
-}
+const navegar = (id) => {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+};
 
-/* RECUADRO DE FIRMA MÁS CHICO */
-.firma-box { 
-    border: 1px solid #ccc; border-radius: 8px; 
-    padding: 5px; margin: 10px 0; background: #fff; width: 200px; /* Tamaño reducido */
-}
-canvas { width: 100%; height: 60px; border-bottom: 1px solid #362FC1; touch-action: none; }
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Navegación
+    document.getElementById('link-ir-a-registro').onclick = (e) => {
+        e.preventDefault();
+        navegar('pantalla-registro');
+    };
 
-/* DNI VISUAL (Se mantiene igual para que no pierda calidad) */
-.dni-visual-box { 
-    position: relative; width: 100%; max-width: 340px; 
-    aspect-ratio: 1.58 / 1; border-radius: 10px; overflow: hidden; margin-bottom: 20px; 
-}
-.dni-fondo-img { width: 100%; height: 100%; object-fit: cover; }
-.txt-dni { position: absolute; color: #000; font-weight: bold; text-transform: uppercase; }
+    // 2. Formateo DNI
+    const inDni = document.getElementById('in-dni');
+    inDni.oninput = (e) => {
+        let val = e.target.value.replace(/\D/g, "");
+        document.getElementById('txt-dni').innerText = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
 
-/* CALIBRACIÓN DNI */
-.pos-foto { position: absolute; top: 22%; left: 6%; width: 23%; height: 48%; object-fit: cover; }
-.pos-apellido { top: 20%; left: 30%; font-size: 14px; }
-.pos-nombre   { top: 30%; left: 30%; font-size: 14px; }
-.pos-dni      { top: 83%; left: 4%; font-size: 20px; letter-spacing: -0.5px; font-weight: 600; }
+    // 3. Firma (Ajuste para que aparezca)
+    const canvas = document.getElementById('canvas-firma');
+    const ctx = canvas.getContext('2d');
+    let dib = false;
 
-/* BOTONES */
-.btn-entrar { background: #362FC1; color: #fff; border: none; width: 100%; padding: 14px; border-radius: 25px; font-weight: bold; margin-top: 10px; }
-input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: center; }
+    const funcEmpezar = (e) => { e.preventDefault(); dib = true; ctx.beginPath(); };
+    const funcMover = (e) => {
+        if (!dib) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left;
+        const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top;
+        ctx.lineWidth = 2; ctx.lineTo(x, y); ctx.stroke();
+    };
+
+    canvas.addEventListener('mousedown', funcEmpezar);
+    canvas.addEventListener('touchstart', funcEmpezar);
+    window.addEventListener('mouseup', () => dib = false);
+    window.addEventListener('touchend', () => dib = false);
+    canvas.addEventListener('mousemove', funcMover);
+    canvas.addEventListener('touchmove', funcMover);
+
+    // 4. EL BOTÓN QUE NO FUNCIONABA
+    document.getElementById('btn-crear-cuenta').onclick = async () => {
+        const mail = document.getElementById('reg-email').value;
+        const pass = document.getElementById('reg-pass').value;
+
+        if(!mail || !pass) return alert("Completa los datos de la cuenta");
+
+        try {
+            await createUserWithEmailAndPassword(auth, mail, pass);
+            alert("¡Registrado!");
+            navegar('pantalla-inicio-app');
+        } catch (err) {
+            alert("Error: " + err.message);
+        }
+    };
+
+    // Foto
+    document.getElementById('btn-trigger-foto').onclick = () => document.getElementById('file-foto').click();
+    document.getElementById('file-foto').onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => document.getElementById('dni-foto-perfil').src = reader.result;
+        reader.readAsDataURL(e.target.files[0]);
+    };
+});
