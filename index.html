@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Argentina</title>
-    
     <link rel="icon" type="image/png" href="logito.png">
     <link rel="apple-touch-icon" href="logito.png">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="header-violeta">
-        <img src="logito.png" alt="Logo Mi Argentina" class="logo-app">
+        <div id="header-inicio" class="header-content">
+            <img src="logo.png" alt="Logo Mi Argentina" class="logo-app">
+        </div>
+        <div id="header-registro" class="header-content" style="display:none;">
+            <button class="btn-back" onclick="irALogin()">←</button>
+            <span class="header-title">Registro</span>
+        </div>
     </div>
 
     <div id="main-container">
+        
         <div id="pantalla-login" class="view active">
             <div class="form-container">
                 <h2 class="main-title">Inicia sesión</h2>
@@ -33,25 +37,72 @@
         </div>
 
         <div id="pantalla-registro" class="view">
-            <div class="form-container">
-                <h2 class="main-title">Registro</h2>
-                <input type="email" id="reg-email" placeholder="Correo electrónico">
+            <div class="form-container editor-container">
+                
+                <div class="dni-card-preview">
+                    <div class="dni-header">REPUBLICA ARGENTINA - MERCOSUR</div>
+                    <div class="dni-body">
+                        <div class="dni-col-foto">
+                            <div class="foto-marco" onclick="document.getElementById('input-foto').click()">
+                                <img id="dni-preview-foto" src="https://via.placeholder.com/100x130?text=FOTO">
+                            </div>
+                        </div>
+                        <div class="dni-col-datos">
+                            <label>Apellido / Surname</label>
+                            <div class="dato-txt" id="prev-apellido">APELLIDO</div>
+                            <label>Nombre / Name</label>
+                            <div class="dato-txt" id="prev-nombre">NOMBRE</div>
+                            <label>Documento / Document</label>
+                            <div class="dato-txt" id="prev-dni">00.000.000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="section-label">Completa tus datos</p>
+                
+                <input type="text" id="reg-apellido" placeholder="Apellido" oninput="actualizarDNI()">
+                <input type="text" id="reg-nombre" placeholder="Nombre" oninput="actualizarDNI()">
+                <input type="text" id="reg-dni" placeholder="DNI" oninput="actualizarDNI()">
+                <input type="text" id="reg-domicilio" placeholder="Domicilio">
+                
+                <div class="row">
+                    <div class="col"><label>Nacimiento</label><input type="date" id="reg-nacimiento"></div>
+                    <div class="col"><label>Emisión</label><input type="date" id="reg-emision"></div>
+                </div>
+
+                <div class="sexo-selector">
+                    <label>Sexo:</label>
+                    <input type="radio" name="sexo" value="M" checked> M
+                    <input type="radio" name="sexo" value="F"> F
+                </div>
+
+                <div class="firma-container">
+                    <label>Firma</label>
+                    <canvas id="canvas-firma"></canvas>
+                    <button class="btn-small" onclick="limpiarFirma()">Limpiar</button>
+                </div>
+
+                <input type="file" id="input-foto" style="display:none" accept="image/*" onchange="cargarFoto(event)">
+                <button class="btn-foto-select" onclick="document.getElementById('input-foto').click()">Seleccionar Foto</button>
+
+                <hr>
+                <p class="section-label">Datos de cuenta</p>
+                <input type="email" id="reg-email" placeholder="Email">
                 <input type="password" id="reg-pass" placeholder="Contraseña (mín. 6)">
-                <input type="text" id="reg-nombre" placeholder="Nombre completo">
+                <input type="password" id="reg-pass-conf" placeholder="Confirmar contraseña">
+
                 <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
-                <p class="footer-links"><a href="javascript:void(0)" onclick="irALogin()">Volver al inicio</a></p>
             </div>
         </div>
 
         <div id="pantalla-home" class="view">
             <div class="form-container">
                 <h2 class="main-title">Mis Documentos</h2>
-                <div class="content-placeholder">
-                    <p>Bienvenido. Aquí aparecerán tus documentos próximamente.</p>
-                </div>
+                <div class="content-placeholder">Bienvenido.</div>
                 <button class="btn-entrar" style="background-color: #8e8e8e;" onclick="location.reload()">CERRAR SESIÓN</button>
             </div>
         </div>
+
     </div>
 
     <script type="module" src="script.js"></script>
