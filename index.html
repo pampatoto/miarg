@@ -15,7 +15,7 @@
             <img src="logo.png" alt="Logo" class="logo-app">
         </div>
         <div id="header-registro" class="header-content" style="display:none;">
-            <button class="btn-back" onclick="irALogin()">←</button>
+            <button id="btn-atras-manual" class="btn-back">←</button>
             <span class="header-title">Registro</span>
         </div>
     </div>
@@ -26,9 +26,9 @@
                 <h2 class="main-title">Inicia sesión</h2>
                 <input type="email" id="login-email" placeholder="Correo electrónico">
                 <input type="password" id="login-pass" placeholder="Contraseña">
-                <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
+                <button class="btn-entrar" id="btn-login-manual">ENTRAR</button>
                 <div class="footer-links">
-                    <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
+                    <p>¿No tienes cuenta? <a href="javascript:void(0)" id="link-ir-a-registro">Registrarse</a></p>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div id="pantalla-registro" class="view">
             <div class="form-container">
                 <div class="dni-visual-box">
-                    <img id="img-dni-fondo" src="dni.png" class="dni-fondo-img">
+                    <img src="dni.png" class="dni-fondo-img">
                     <div class="datos-superpuestos">
                         <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
                         <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
@@ -49,32 +49,32 @@
                     </div>
                 </div>
 
-                <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
-                <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
-                <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
+                <input type="text" id="in-apellido" placeholder="Apellido">
+                <input type="text" id="in-nombre" placeholder="Nombre">
+                <input type="text" id="in-dni" placeholder="DNI">
                 
                 <div class="grid-2">
-                    <input type="text" id="in-nac" placeholder="Nacimiento" oninput="actualizar()">
-                    <input type="text" id="in-emi" placeholder="Emisión" oninput="actualizar()">
+                    <input type="text" id="in-nac" placeholder="Nacimiento">
+                    <input type="text" id="in-emi" placeholder="Emisión">
                 </div>
                 
-                <select id="in-sexo" onchange="actualizar()">
+                <select id="in-sexo">
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                 </select>
 
                 <div class="firma-box">
                     <canvas id="canvas-firma"></canvas>
-                    <button class="btn-clear" onclick="limpiarFirma()">Limpiar</button>
+                    <button id="btn-limpiar-firma" class="btn-clear">Limpiar</button>
                 </div>
 
-                <button class="btn-foto-local" onclick="document.getElementById('file-foto').click()">Seleccionar Foto</button>
-                <input type="file" id="file-foto" style="display:none" accept="image/*" onchange="cargarFoto(event)">
+                <button class="btn-foto-local" id="btn-trigger-foto">Seleccionar Foto</button>
+                <input type="file" id="file-foto" style="display:none" accept="image/*">
                 
                 <hr>
                 <input type="email" id="reg-email" placeholder="Email">
                 <input type="password" id="reg-pass" placeholder="Contraseña">
-                <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
+                <button class="btn-entrar" id="btn-crear-cuenta">REGISTRARME</button>
             </div>
         </div>
     </div>
