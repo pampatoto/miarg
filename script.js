@@ -13,43 +13,38 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Lógica de colores en vivo (Rojo < 6, Verde >= 6)
 const aplicarValidacion = (id, condicion) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener('input', () => {
-        if (condicion(el.value)) {
-            el.style.border = "2px solid #4CAF50"; // Verde
-        } else {
-            el.style.border = "2px solid red"; // Rojo
-        }
+        el.style.border = condicion(el.value) ? "2px solid #4CAF50" : "2px solid red";
     });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Valida email (formato básico) y contraseña (mínimo 6)
     aplicarValidacion('login-email', val => val.includes('@') && val.includes('.'));
     aplicarValidacion('login-pass', val => val.length >= 6);
-    
-    // También para la pantalla de registro si se carga
-    if(document.getElementById('reg-email')) {
-        aplicarValidacion('reg-email', val => val.includes('@') && val.includes('.'));
-        aplicarValidacion('reg-pass', val => val.length >= 6);
-    }
 });
 
-window.mostrarRegistro = () => { document.getElementById('pantalla-login').style.display = 'none'; document.getElementById('pantalla-registro').style.display = 'flex'; }
-window.mostrarLogin = () => { document.getElementById('pantalla-registro').style.display = 'none'; document.getElementById('pantalla-login').style.display = 'flex'; }
+window.mostrarRegistro = () => {
+    document.getElementById('pantalla-login').style.display = 'none';
+    document.getElementById('pantalla-registro').style.display = 'flex';
+}
+
+window.mostrarLogin = () => {
+    document.getElementById('pantalla-registro').style.display = 'none';
+    document.getElementById('pantalla-login').style.display = 'flex';
+}
 
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
-    if(pass.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
+    if(pass.length < 6) return alert("Mínimo 6 caracteres");
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
         alert("¡Cuenta creada!");
         location.reload();
-    } catch (e) { alert("Error al registrar: datos inválidos o ya existentes"); }
+    } catch (e) { alert("Error al registrar"); }
 }
 
 window.intentarEntrar = async () => {
@@ -58,5 +53,5 @@ window.intentarEntrar = async () => {
     try {
         await signInWithEmailAndPassword(auth, email, pass);
         alert("¡Ingreso exitoso!");
-    } catch (e) { alert("Email o contraseña incorrectos"); }
+    } catch (e) { alert("Datos incorrectos"); }
 }
