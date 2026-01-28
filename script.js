@@ -1,42 +1,35 @@
-function verificarPin() {
-    const pin = document.getElementById('pin-input').value;
-    if (pin === "1234") { 
-        document.getElementById('pantalla-pin').style.display = 'none';
-        document.getElementById('pantalla-app').style.display = 'flex';
-        cargarDatos();
+function mostrarRegistro() {
+    document.getElementById('pantalla-login').style.display = 'none';
+    document.getElementById('pantalla-registro').style.display = 'flex';
+}
+
+function crearCuenta() {
+    const nombre = document.getElementById('reg-nombre').value;
+    const email = document.getElementById('reg-email').value;
+    const pin = document.getElementById('reg-pin').value;
+
+    if(nombre && email && pin) {
+        localStorage.setItem('usuario_registrado', email);
+        localStorage.setItem('pin_seguridad', pin);
+        localStorage.setItem('user_nombre', nombre);
+        alert("Cuenta creada. Ahora inicia sesión.");
+        location.reload();
     } else {
-        alert("PIN incorrecto. Usá 1234");
+        alert("Completa todos los datos");
     }
 }
 
-document.getElementById('input-foto').addEventListener('change', function(e) {
-    const reader = new FileReader();
-    reader.onload = function() {
-        document.getElementById('foto-perfil').src = reader.result;
+function intentarEntrar() {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    
+    const emailGuardado = localStorage.getItem('usuario_registrado');
+    const pinGuardado = localStorage.getItem('pin_seguridad');
+
+    if (email === emailGuardado && pass === pinGuardado) {
+        document.getElementById('pantalla-login').style.display = 'none';
+        document.getElementById('pantalla-app').style.display = 'block';
+    } else {
+        alert("Email o contraseña (PIN) incorrectos");
     }
-    reader.readAsDataURL(e.target.files[0]);
-});
-
-function guardarLocal() {
-    const nombre = document.getElementById('campo-nombre').innerText;
-    const profesion = document.getElementById('campo-profesion').innerText;
-    const foto = document.getElementById('foto-perfil').src;
-
-    localStorage.setItem('user_nombre', nombre);
-    localStorage.setItem('user_profesion', profesion);
-    localStorage.setItem('user_foto', foto);
-
-    alert("¡Guardado en tu iPhone!");
-}
-
-function cargarDatos() {
-    if(localStorage.getItem('user_nombre')) {
-        document.getElementById('campo-nombre').innerText = localStorage.getItem('user_nombre');
-        document.getElementById('campo-profesion').innerText = localStorage.getItem('user_profesion');
-        document.getElementById('foto-perfil').src = localStorage.getItem('user_foto');
-    }
-}
-
-function cerrarSesion() {
-    location.reload();
 }
