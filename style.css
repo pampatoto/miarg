@@ -4,11 +4,11 @@ body, html {
     background: #ffffff; 
 }
 
-/* BARRA VIOLETA */
+/* BARRA SUPERIOR VIOLETA */
 .header-violeta {
-    background-color: #6a1b9a; /* Un violeta oscuro típico de Mi Argentina */
+    background-color: #6a1b9a; 
     width: 100%;
-    height: 60px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -18,35 +18,43 @@ body, html {
     z-index: 1000;
 }
 
-.logo-header {
-    height: 30px; /* Tamaño del logo en la barra */
-    filter: brightness(0) invert(1); /* Esto pone el logo en blanco si es oscuro */
+.logo-app {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Pone el logo en blanco */
 }
 
 .view { 
     display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    min-height: 100vh; padding-top: 60px; /* Espacio para que la barra no tape el título */
-    padding-left: 20px; padding-right: 20px;
+    min-height: 100vh; padding: 80px 20px 20px; /* Espacio para el header */
     box-sizing: border-box; 
 }
 
-.form-container { width: 100%; text-align: center; }
+.form-container { 
+    width: 100%; 
+    text-align: center; 
+}
 
+/* RESPONSIVE: COMPU VS CELULAR */
 @media (min-width: 768px) {
     .form-container { max-width: 350px; padding: 40px; border: 1px solid #eee; border-radius: 20px; }
 }
-
 @media (max-width: 767px) {
     .form-container { max-width: 300px; }
 }
 
-.main-title { font-size: 20px; font-weight: 500; color: #8e8e8e; margin: 20px 0 30px; }
+.main-title { 
+    font-size: 20px; font-weight: 500; color: #8e8e8e; 
+    margin: 10px 0 30px; 
+}
 
+/* INPUTS ESTILO MI ARGENTINA */
 input { 
     width: 100%; font-size: 16px; padding: 12px 10px; 
     background-color: #fafafa; border: 1px solid #ccc; 
     border-radius: 4px; margin-bottom: 20px; outline: none; 
-    box-sizing: border-box; transition: all 0.2s ease;
+    box-sizing: border-box; transition: border 0.2s ease;
 }
 
 .btn-lila { 
