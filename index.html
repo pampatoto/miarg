@@ -10,76 +10,37 @@
 </head>
 <body>
 
-    <div id="app-phone-wrapper">
-        
-        <div class="header-violeta">
-            <div id="header-inicio" class="header-content">
-                <img src="logo.png" alt="Logo" class="logo-app">
-            </div>
-            <div id="header-registro" class="header-content" style="display:none;">
-                <button class="btn-back" onclick="irALogin()">←</button>
-                <span class="header-title">Registro</span>
-            </div>
+    <div class="header-violeta">
+        <div id="header-inicio" class="header-content">
+            <img src="logo.png" alt="Logo" class="logo-app">
         </div>
-
-        <div id="main-container">
-            <div id="pantalla-login" class="view active">
-                <div class="form-container">
-                    <h2 class="main-title">Inicia sesión</h2>
-                    <input type="email" id="login-email" placeholder="Correo electrónico">
-                    <input type="password" id="login-pass" placeholder="Contraseña">
-                    <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
-                    <div class="footer-links">
-                        <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="pantalla-registro" class="view">
-                <div class="form-container">
-                    <div class="dni-visual-box">
-                        <img src="dni.png" class="dni-fondo-img">
-                        <div class="datos-superpuestos">
-                            <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
-                            <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
-                            <div class="txt-dni pos-nombre" id="txt-nombre">NOMBRE</div>
-                            <div class="txt-dni pos-dni" id="txt-dni">00.000.000</div>
-                            <div class="txt-dni pos-nac" id="txt-nac">01 ENE 2007</div>
-                            <div class="txt-dni pos-emi" id="txt-emi">19 ENE 2021</div>
-                            <div class="txt-dni pos-sexo" id="txt-sexo">M</div>
-                            <img id="img-firma-preview" class="pos-firma">
-                        </div>
-                    </div>
-
-                    <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
-                    <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
-                    <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
-                    <div class="grid-2">
-                        <input type="text" id="in-nac" placeholder="Nacimiento" oninput="actualizar()">
-                        <input type="text" id="in-emi" placeholder="Emisión" oninput="actualizar()">
-                    </div>
-                    <select id="in-sexo" onchange="actualizar()">
-                        <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                    </select>
-
-                    <div class="firma-box">
-                        <canvas id="canvas-firma"></canvas>
-                        <button class="btn-clear" onclick="limpiarFirma()">Limpiar</button>
-                    </div>
-
-                    <button class="btn-foto-local" onclick="document.getElementById('file-foto').click()">Seleccionar Foto</button>
-                    <input type="file" id="file-foto" style="display:none" accept="image/*" onchange="cargarFoto(event)">
-                    
-                    <hr>
-                    <input type="email" id="reg-email" placeholder="Email">
-                    <input type="password" id="reg-pass" placeholder="Contraseña">
-                    <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
-                </div>
-            </div>
+        <div id="header-registro" class="header-content" style="display:none;">
+            <button class="btn-back" onclick="irALogin()">←</button>
+            <span class="header-title">Registro</span>
         </div>
     </div>
 
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+    <div id="main-container">
+        <div id="pantalla-login" class="view active">
+            <div class="form-container">
+                <h2 class="main-title">Inicia sesión</h2>
+                <input type="email" id="login-email" placeholder="Correo electrónico">
+                <input type="password" id="login-pass" placeholder="Contraseña">
+                <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
+                <div class="footer-links">
+                    <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="pantalla-registro" class="view">
+            <div class="form-container">
+                <div class="dni-visual-box">
+                    <img src="dni.png" class="dni-fondo-img">
+                    <div class="datos-superpuestos">
+                        <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
+                        <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
+                        <div class="txt-dni pos-nombre" id="txt-nombre">NOMBRE</div>
+                        <div class="txt-dni pos-dni" id="txt-dni">00.000.000</div>
+                        <div class="txt-dni pos-nac" id="txt-nac">01 ENE 2007</div>
+                        <div class="txt-dni pos-emi" id="txt-emi">19 ENE 2021</div>
