@@ -22,45 +22,38 @@ const navegar = (id) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Botones de Navegación
     document.getElementById('link-ir-a-registro').addEventListener('click', (e) => {
-        e.preventDefault();
-        navegar('pantalla-registro');
+        e.preventDefault(); navegar('pantalla-registro');
     });
 
     document.getElementById('btn-atras-manual').addEventListener('click', () => {
         navegar('pantalla-login');
     });
 
-    // Actualización de datos
-    const inputs = ['in-apellido', 'in-nombre', 'in-dni', 'in-nac', 'in-emi', 'in-sexo'];
-    inputs.forEach(id => {
-        document.getElementById(id).addEventListener('input', () => {
-            document.getElementById('txt-apellido').innerText = document.getElementById('in-apellido').value || "APELLIDO";
-            document.getElementById('txt-nombre').innerText = document.getElementById('in-nombre').value || "NOMBRE";
-            document.getElementById('txt-dni').innerText = document.getElementById('in-dni').value || "00.000.000";
-            document.getElementById('txt-nac').innerText = document.getElementById('in-nac').value || "01 ENE 2007";
-            document.getElementById('txt-emi').innerText = document.getElementById('in-emi').value || "19 ENE 2021";
-            document.getElementById('txt-sexo').innerText = document.getElementById('in-sexo').value;
-        });
+    const actualizar = () => {
+        document.getElementById('txt-apellido').innerText = document.getElementById('in-apellido').value || "APELLIDO";
+        document.getElementById('txt-nombre').innerText = document.getElementById('in-nombre').value || "NOMBRE";
+        document.getElementById('txt-dni').innerText = document.getElementById('in-dni').value || "00.000.000";
+        document.getElementById('txt-nac').innerText = document.getElementById('in-nac').value || "01 ENE 2007";
+        document.getElementById('txt-emi').innerText = document.getElementById('in-emi').value || "19 ENE 2021";
+        document.getElementById('txt-ven').innerText = document.getElementById('in-ven').value || "19 ENE 2036";
+        document.getElementById('txt-sexo').innerText = document.getElementById('in-sexo').value;
+    };
+
+    ['in-apellido', 'in-nombre', 'in-dni', 'in-nac', 'in-emi', 'in-ven', 'in-sexo'].forEach(id => {
+        document.getElementById(id).addEventListener('input', actualizar);
     });
 
-    // Foto
-    document.getElementById('btn-trigger-foto').addEventListener('click', () => {
-        document.getElementById('file-foto').click();
-    });
-
+    document.getElementById('btn-trigger-foto').addEventListener('click', () => document.getElementById('file-foto').click());
     document.getElementById('file-foto').addEventListener('change', (e) => {
         const reader = new FileReader();
         reader.onload = () => document.getElementById('dni-foto-perfil').src = reader.result;
         reader.readAsDataURL(e.target.files[0]);
     });
 
-    // Canvas Firma
     const canvas = document.getElementById('canvas-firma');
     const ctx = canvas.getContext('2d');
     let dib = false;
-
     const start = (e) => { e.preventDefault(); dib = true; ctx.beginPath(); };
     const stop = () => { dib = false; document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
     const draw = (e) => {
@@ -82,14 +75,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-limpiar-firma').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('img-firma-preview').src = "";
-    });
-
-    // Registro Firebase
-    document.getElementById('btn-crear-cuenta').addEventListener('click', async () => {
-        try {
-            await createUserWithEmailAndPassword(auth, document.getElementById('reg-email').value, document.getElementById('reg-pass').value);
-            alert("¡Registro exitoso!");
-            location.reload();
-        } catch (e) { alert("Error al registrar"); }
     });
 });
