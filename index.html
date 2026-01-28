@@ -36,7 +36,7 @@
         <div id="pantalla-registro" class="view">
             <div class="form-container">
                 <div class="dni-visual-box">
-                    <img src="dni.png" class="dni-fondo-img">
+                    <img id="img-dni-fondo" src="dni.png" class="dni-fondo-img">
                     <div class="datos-superpuestos">
                         <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
                         <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
@@ -52,10 +52,12 @@
                 <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
                 <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
                 <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
+                
                 <div class="grid-2">
                     <input type="text" id="in-nac" placeholder="Nacimiento" oninput="actualizar()">
                     <input type="text" id="in-emi" placeholder="Emisión" oninput="actualizar()">
                 </div>
+                
                 <select id="in-sexo" onchange="actualizar()">
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
