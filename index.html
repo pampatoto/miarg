@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Argentina</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,50 +12,23 @@
         <div class="form-container">
             <h2 class="main-title">Inicia sesión</h2>
             <input type="email" id="login-email" placeholder="Correo electrónico">
-            <input type="password" id="login-pass" placeholder="PIN">
+            <input type="password" id="login-pass" placeholder="Contraseña">
             <button class="btn-lila" onclick="intentarEntrar()">ENTRAR</button>
-            <p class="footer-links">¿No tienes cuenta? <a href="#" onclick="mostrarRegistro()">Registrarse</a></p>
+            <div class="footer-links">
+                <p><a href="#">¿Olvidaste tu contraseña?</a></p>
+                <p>¿No tienes cuenta? <a href="#" onclick="mostrarRegistro()">Registrarse</a></p>
+            </div>
         </div>
     </div>
 
     <div id="pantalla-registro" class="view" style="display:none;">
         <div class="form-container">
             <h2 class="main-title">Crea tu cuenta</h2>
-            <input type="email" id="reg-email" placeholder="Tu Email">
-            <input type="password" id="reg-pin" placeholder="Crea un PIN (6 nros)">
-            
-            <hr>
-            <p style="font-size: 12px; color: #888;">CONFIGURACIÓN DEL DOCUMENTO</p>
+            <input type="email" id="reg-email" placeholder="Correo electrónico">
+            <input type="password" id="reg-pass" placeholder="Contraseña (mín. 4 caracteres)">
             <input type="text" id="reg-nombre" placeholder="Nombre completo">
-            <input type="text" id="reg-dni" placeholder="Número de DNI">
-            <input type="text" id="reg-cuil" placeholder="Número de CUIL">
-            
-            <button class="btn-lila" onclick="crearCuenta()">REGISTRAR Y GUARDAR</button>
+            <button class="btn-lila" onclick="crearCuenta()">REGISTRARME</button>
             <p class="footer-links"><a href="#" onclick="mostrarLogin()">Volver</a></p>
-        </div>
-    </div>
-
-    <div id="pantalla-app" style="display:none;">
-        <div class="header-azul">Mis documentos</div>
-        <div class="view app-view">
-            <div class="dni-card">
-                <div class="dni-top">REPUBLICA ARGENTINA - DNI DIGITAL</div>
-                <div class="dni-body">
-                    <div class="foto-perfil" onclick="document.getElementById('input-foto').click()">
-                        <img id="foto-mostrada" src="https://via.placeholder.com/110x140">
-                    </div>
-                    <div class="dni-datos">
-                        <label>APELLIDO Y NOMBRE</label>
-                        <h1 id="ver-nombre">---</h1>
-                        <label>DOCUMENTO</label>
-                        <p id="ver-dni">---</p>
-                        <label>CUIL</label>
-                        <p id="ver-cuil">---</p>
-                    </div>
-                </div>
-                <input type="file" id="input-foto" style="display:none" accept="image/*">
-            </div>
-            <button class="btn-lila" style="margin-top:20px;" onclick="location.reload()">CERRAR SESIÓN</button>
         </div>
     </div>
 
