@@ -1,35 +1,46 @@
-function mostrarRegistro() {
-    document.getElementById('pantalla-login').style.display = 'none';
-    document.getElementById('pantalla-registro').style.display = 'flex';
-}
+// Importamos las herramientas de Google (Versión 12.8.0 como te dio Firebase)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-function crearCuenta() {
-    const nombre = document.getElementById('reg-nombre').value;
-    const email = document.getElementById('reg-email').value;
-    const pin = document.getElementById('reg-pin').value;
+// Tu configuración original
+const firebaseConfig = {
+  apiKey: "AIzaSyDntkOBeYnBVBE0DLZ0vPkO2LrLdG-WqUQ",
+  authDomain: "miarg-proyecto.firebaseapp.com",
+  projectId: "miarg-proyecto",
+  storageBucket: "miarg-proyecto.firebasestorage.app",
+  messagingSenderId: "883813445397",
+  appId: "1:883813445397:web:53f323a000aeb41695431c",
+  measurementId: "G-F0L8ZJVFKX"
+};
 
-    if(nombre && email && pin) {
-        localStorage.setItem('usuario_registrado', email);
-        localStorage.setItem('pin_seguridad', pin);
-        localStorage.setItem('user_nombre', nombre);
-        alert("Cuenta creada. Ahora inicia sesión.");
-        location.reload();
-    } else {
-        alert("Completa todos los datos");
-    }
-}
+// Inicializamos Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-function intentarEntrar() {
+// Hacemos las funciones visibles para los botones del HTML
+window.intentarEntrar = async () => {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-pass').value;
-    
-    const emailGuardado = localStorage.getItem('usuario_registrado');
-    const pinGuardado = localStorage.getItem('pin_seguridad');
 
-    if (email === emailGuardado && pass === pinGuardado) {
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
         document.getElementById('pantalla-login').style.display = 'none';
         document.getElementById('pantalla-app').style.display = 'block';
-    } else {
-        alert("Email o contraseña (PIN) incorrectos");
+        alert("¡Bienvenido!");
+    } catch (error) {
+        alert("Error: El usuario no existe o el PIN es incorrecto.");
     }
-}
+};
+
+window.crearCuenta = async () => {
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pin').value;
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert("Cuenta creada con éxito. Ahora podés iniciar sesión.");
+        location.reload(); // Recarga para ir al login
+    } catch (error) {
+        alert("No se pudo crear la cuenta: " + error.message);
+    }
+};
