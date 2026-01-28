@@ -13,10 +13,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Navegación con clase 'active' para transiciones
 const navegarA = (idPantalla) => {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     setTimeout(() => {
-        document.getElementById(idPantalla).classList.add('active');
+        const target = document.getElementById(idPantalla);
+        if(target) target.classList.add('active');
     }, 50);
 };
 
@@ -41,9 +43,9 @@ window.crearCuenta = async () => {
     const pass = document.getElementById('reg-pass').value;
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        alert("¡Cuenta creada!");
+        alert("¡Cuenta creada con éxito!");
         irALogin();
-    } catch (e) { alert("Error al registrar"); }
+    } catch (e) { alert("Error al registrar: verifique sus datos"); }
 };
 
 window.intentarEntrar = async () => {
@@ -52,5 +54,5 @@ window.intentarEntrar = async () => {
     try {
         await signInWithEmailAndPassword(auth, email, pass);
         navegarA('pantalla-home');
-    } catch (e) { alert("Datos incorrectos"); }
+    } catch (e) { alert("Email o contraseña incorrectos"); }
 };
