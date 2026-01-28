@@ -13,7 +13,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// FUNCIÓN PARA CAMBIAR DE PANTALLA CON TRANSICIÓN
 const navegarA = (idPantalla) => {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     setTimeout(() => {
@@ -21,7 +20,6 @@ const navegarA = (idPantalla) => {
     }, 50);
 };
 
-// VALIDACIÓN VISUAL
 const validar = (id, condicion) => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -35,17 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
     validar('login-pass', val => val.length >= 6);
 });
 
-// NAVEGACIÓN GLOBAL
 window.irARegistro = () => navegarA('pantalla-registro');
 window.irALogin = () => navegarA('pantalla-login');
 
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
-    if(pass.length < 6) return alert("Contraseña mínima 6 caracteres");
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        alert("Cuenta creada!");
+        alert("¡Cuenta creada!");
         irALogin();
     } catch (e) { alert("Error al registrar"); }
 };
@@ -55,7 +51,6 @@ window.intentarEntrar = async () => {
     const pass = document.getElementById('login-pass').value;
     try {
         await signInWithEmailAndPassword(auth, email, pass);
-        // Aquí ocurre la magia: si entra, cambia a la home
         navegarA('pantalla-home');
     } catch (e) { alert("Datos incorrectos"); }
 };
