@@ -13,23 +13,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// VALIDACIÓN EN VIVO
-const validarInput = (input, condicion) => {
-    input.addEventListener('input', () => {
-        if (condicion(input.value)) {
-            input.classList.remove('invalid');
-            input.classList.add('valid');
+// Lógica de colores en vivo (Rojo < 6, Verde >= 6)
+const aplicarValidacion = (id, condicion) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+        if (condicion(el.value)) {
+            el.style.border = "2px solid #4CAF50"; // Verde
         } else {
-            input.classList.remove('valid');
-            input.classList.add('invalid');
+            el.style.border = "2px solid red"; // Rojo
         }
     });
 };
 
-// Reglas: Email debe tener @ y . | Contraseña min 4
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-document.querySelectorAll('input[type="email"]').forEach(i => validarInput(i, val => emailRegex.test(val)));
-document.querySelectorAll('input[type="password"]').forEach(i => validarInput(i, val => val.length >= 4));
+document.addEventListener('DOMContentLoaded', () => {
+    // Valida email (formato básico) y contraseña (mínimo 6)
+    aplicarValidacion('login-email', val => val.includes('@') && val.includes('.'));
+    aplicarValidacion('login-pass', val => val.length >= 6);
+    
+    // También para la pantalla de registro si se carga
+    if(document.getElementById('reg-email')) {
+        aplicarValidacion('reg-email', val => val.includes('@') && val.includes('.'));
+        aplicarValidacion('reg-pass', val => val.length >= 6);
+    }
+});
 
 window.mostrarRegistro = () => { document.getElementById('pantalla-login').style.display = 'none'; document.getElementById('pantalla-registro').style.display = 'flex'; }
 window.mostrarLogin = () => { document.getElementById('pantalla-registro').style.display = 'none'; document.getElementById('pantalla-login').style.display = 'flex'; }
@@ -37,12 +44,12 @@ window.mostrarLogin = () => { document.getElementById('pantalla-registro').style
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
-    if(pass.length < 4) return alert("La contraseña debe tener al menos 4 caracteres");
+    if(pass.length < 6) return alert("La contraseña debe tener al menos 6 caracteres");
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
         alert("¡Cuenta creada!");
         location.reload();
-    } catch (e) { alert("Error: Datos inválidos"); }
+    } catch (e) { alert("Error al registrar: datos inválidos o ya existentes"); }
 }
 
 window.intentarEntrar = async () => {
@@ -50,6 +57,6 @@ window.intentarEntrar = async () => {
     const pass = document.getElementById('login-pass').value;
     try {
         await signInWithEmailAndPassword(auth, email, pass);
-        alert("Entraste!");
+        alert("¡Ingreso exitoso!");
     } catch (e) { alert("Email o contraseña incorrectos"); }
 }
