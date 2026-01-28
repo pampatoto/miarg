@@ -1,8 +1,6 @@
-// Importamos las herramientas de Google (Versión 12.8.0 como te dio Firebase)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-// Tu configuración original
 const firebaseConfig = {
   apiKey: "AIzaSyDntkOBeYnBVBE0DLZ0vPkO2LrLdG-WqUQ",
   authDomain: "miarg-proyecto.firebaseapp.com",
@@ -13,11 +11,40 @@ const firebaseConfig = {
   measurementId: "G-F0L8ZJVFKX"
 };
 
-// Inicializamos Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Hacemos las funciones visibles para los botones del HTML
+// FUNCIONES DE NAVEGACIÓN
+window.mostrarRegistro = () => {
+    document.getElementById('pantalla-login').style.display = 'none';
+    document.getElementById('pantalla-registro').style.display = 'flex';
+}
+
+window.mostrarLogin = () => {
+    document.getElementById('pantalla-registro').style.display = 'none';
+    document.getElementById('pantalla-login').style.display = 'flex';
+}
+
+// LÓGICA DE FIREBASE
+window.crearCuenta = async () => {
+    const email = document.getElementById('reg-email').value;
+    const pass = document.getElementById('reg-pin').value;
+    const nombre = document.getElementById('reg-nombre').value;
+
+    if(pass.length < 6) {
+        alert("El PIN debe tener al menos 6 números por seguridad de Google.");
+        return;
+    }
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert("¡Cuenta creada para " + nombre + "! Ahora inicia sesión.");
+        mostrarLogin();
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+};
+
 window.intentarEntrar = async () => {
     const email = document.getElementById('login-email').value;
     const pass = document.getElementById('login-pass').value;
@@ -26,21 +53,16 @@ window.intentarEntrar = async () => {
         await signInWithEmailAndPassword(auth, email, pass);
         document.getElementById('pantalla-login').style.display = 'none';
         document.getElementById('pantalla-app').style.display = 'block';
-        alert("¡Bienvenido!");
     } catch (error) {
-        alert("Error: El usuario no existe o el PIN es incorrecto.");
+        alert("Correo o PIN incorrectos.");
     }
 };
 
-window.crearCuenta = async () => {
-    const email = document.getElementById('reg-email').value;
-    const pass = document.getElementById('reg-pin').value;
-
-    try {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        alert("Cuenta creada con éxito. Ahora podés iniciar sesión.");
-        location.reload(); // Recarga para ir al login
-    } catch (error) {
-        alert("No se pudo crear la cuenta: " + error.message);
+// MANEJO DE FOTO
+document.getElementById('input-foto').addEventListener('change', function(e) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        document.getElementById('foto-mostrada').src = reader.result;
     }
-};
+    reader.readAsDataURL(e.target.files[0]);
+});
