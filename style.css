@@ -7,38 +7,25 @@ body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; background: 
 .view.active { opacity: 1; pointer-events: all; }
 
 .dni-visual-box { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1.58 / 1; background: #eee; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-.dni-fondo-img { width: 100%; height: 100%; object-fit: cover; }
+.dni-fondo-img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .datos-superpuestos { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
-/* ESTILO GENERAL DE TEXTOS (BASADO EN TU INSPECCIÓN) */
-.txt-dni { 
-    position: absolute; 
-    color: #000; 
-    font-family: Arial, sans-serif; 
-    font-weight: 400; 
-    text-transform: uppercase; 
-    white-space: nowrap;
-}
+.txt-dni { position: absolute; color: #000; font-family: Arial, sans-serif; font-weight: 400; text-transform: uppercase; white-space: nowrap; }
 
-/* CALIBRACIÓN DE POSICIONES Y ESTILOS ESPECÍFICOS */
+/* CALIBRACIÓN SOLICITADA */
 .pos-foto { position: absolute; top: 22%; left: 6%; width: 23%; height: 48%; object-fit: cover; }
 
-/* Fechas: 21.99px y 0.2px spacing */
-.pos-apellido { top: 20%; left: 30%; font-size: 16px; } 
+.pos-apellido { top: 20%; left: 30%; font-size: 16px; }
 .pos-nombre   { top: 30%; left: 30%; font-size: 16px; }
 .pos-sexo     { top: 40%; left: 30%; font-size: 16px; }
+.pos-nac      { top: 50%; left: 30%; font-size: 16px; letter-spacing: .2px; }
+.pos-emi      { top: 60%; left: 30%; font-size: 16px; letter-spacing: .2px; }
+.pos-ven      { top: 70%; left: 30%; font-size: 16px; letter-spacing: .2px; }
 
-.pos-nac, .pos-emi, .pos-ven { 
-    font-size: 16px; /* Escalado para móvil, equivale al 21.99px de PC */
-    letter-spacing: .2px; 
-}
-.pos-nac { top: 50%; left: 30%; }
-.pos-emi { top: 60%; left: 30%; }
-.pos-ven { top: 70%; left: 30%; }
-
-/* DNI Número: 35.52px, Negrita y -0.5px spacing */
+/* Nueva posición DNI y estilo de inspección */
 .pos-dni { 
-    top: 80%; left: 30%; 
+    top: 83%;     /* Posición pedida */
+    left: 4%;     /* Posición pedida */
     font-size: 22px; 
     font-weight: 600; 
     letter-spacing: -0.5px; 
@@ -49,4 +36,3 @@ body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; background: 
 /* UI */
 input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
 .btn-entrar { background: #362FC1; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-.btn-foto-local { background: #f0f0f0; border: 1px solid #ccc; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 10px; }
