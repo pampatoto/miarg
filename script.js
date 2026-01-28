@@ -13,68 +13,68 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// NAVEGACIÓN Y HEADER
-const navegarA = (idPantalla) => {
+const navegar = (id) => {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    document.getElementById('header-inicio').style.display = idPantalla === 'pantalla-login' ? 'flex' : 'none';
-    document.getElementById('header-registro').style.display = idPantalla === 'pantalla-registro' ? 'flex' : 'none';
-    setTimeout(() => document.getElementById(idPantalla).classList.add('active'), 50);
+    document.getElementById('header-inicio').style.display = id === 'pantalla-login' ? 'flex' : 'none';
+    document.getElementById('header-registro').style.display = id === 'pantalla-registro' ? 'flex' : 'none';
+    setTimeout(() => document.getElementById(id).classList.add('active'), 50);
 };
 
-window.irARegistro = () => navegarA('pantalla-registro');
-window.irALogin = () => navegarA('pantalla-login');
+window.irARegistro = () => navegar('pantalla-registro');
+window.irALogin = () => navegar('pantalla-login');
 
-// EDICIÓN EN VIVO DNI
-window.actualizarDNI = () => {
-    document.getElementById('prev-apellido').innerText = document.getElementById('reg-apellido').value || "APELLIDO";
-    document.getElementById('prev-nombre').innerText = document.getElementById('reg-nombre').value || "NOMBRE";
-    document.getElementById('prev-dni').innerText = document.getElementById('reg-dni').value || "00.000.000";
+// ACTUALIZACIÓN EN VIVO
+window.actualizar = () => {
+    document.getElementById('txt-apellido').innerText = document.getElementById('in-apellido').value || "APELLIDO";
+    document.getElementById('txt-nombre').innerText = document.getElementById('in-nombre').value || "NOMBRE";
+    document.getElementById('txt-dni').innerText = document.getElementById('in-dni').value || "00.000.000";
+    document.getElementById('txt-nac').innerText = document.getElementById('in-nac').value || "01 ENE 2007";
+    document.getElementById('txt-emi').innerText = document.getElementById('in-emi').value || "19 ENE 2021";
+    document.getElementById('txt-sexo').innerText = document.getElementById('in-sexo').value;
 };
 
-window.cargarFoto = (event) => {
+window.cargarFoto = (e) => {
     const reader = new FileReader();
-    reader.onload = () => document.getElementById('dni-preview-foto').src = reader.result;
-    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = () => document.getElementById('dni-foto-perfil').src = reader.result;
+    reader.readAsDataURL(e.target.files[0]);
 };
 
-// LIENZO DE FIRMA
+// FIRMA
 const canvas = document.getElementById('canvas-firma');
 const ctx = canvas.getContext('2d');
 let dibujando = false;
 
-canvas.addEventListener('mousedown', () => dibujando = true);
-window.addEventListener('mouseup', () => { dibujando = false; ctx.beginPath(); });
-canvas.addEventListener('mousemove', (e) => {
+const start = (e) => { dibujando = true; draw(e); };
+const stop = () => { 
+    dibujando = false; 
+    ctx.beginPath();
+    document.getElementById('img-firma-preview').src = canvas.toDataURL(); // Pasa la firma al DNI
+};
+const draw = (e) => {
     if (!dibujando) return;
-    ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.strokeStyle = '#000';
+    ctx.lineWidth = 2; ctx.strokeStyle = '#000';
     const rect = canvas.getBoundingClientRect();
-    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-    ctx.stroke();
-});
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+};
 
-window.limpiarFirma = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
+canvas.addEventListener('mousedown', start);
+canvas.addEventListener('touchstart', start);
+window.addEventListener('mouseup', stop);
+window.addEventListener('touchend', stop);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('touchmove', draw);
 
-// REGISTRO CON VALIDACIÓN
+window.limpiarFirma = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); document.getElementById('img-firma-preview').src = ""; };
+
+// FIREBASE
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
-    const passConf = document.getElementById('reg-pass-conf').value;
-
-    if (pass !== passConf) return alert("Las contraseñas no coinciden");
-    if (pass.length < 6) return alert("Mínimo 6 caracteres");
-
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        alert("¡Cuenta y DNI guardados!");
-        navegarA('pantalla-home');
-    } catch (e) { alert("Error: " + e.message); }
-};
-
-window.intentarEntrar = async () => {
-    const email = document.getElementById('login-email').value;
-    const pass = document.getElementById('login-pass').value;
-    try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        navegarA('pantalla-home');
-    } catch (e) { alert("Datos incorrectos"); }
+        document.getElementById('visual-final-dni').innerHTML = document.querySelector('.dni-visual-box').outerHTML;
+        navegar('pantalla-home');
+    } catch (e) { alert("Error al registrar"); }
 };
