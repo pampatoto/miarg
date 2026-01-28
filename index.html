@@ -1,82 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mi Argentina</title>
-    <link rel="icon" type="image/png" href="logito.png">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #fff; overflow-x: hidden; }
 
-    <div class="header-violeta">
-        <div id="header-inicio" class="header-content">
-            <img src="logo.png" alt="Logo" class="logo-app">
-        </div>
-        <div id="header-registro" class="header-content" style="display:none;">
-            <button id="btn-atras-manual" class="btn-back">←</button>
-            <span class="header-title">Registro</span>
-        </div>
-    </div>
+.header-violeta { background: #362FC1; width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; position: fixed; top: 0; z-index: 1000; }
+.logo-app { height: 35px; filter: brightness(0) invert(1); }
 
-    <div id="main-container">
-        <div id="pantalla-login" class="view active">
-            <div class="form-container">
-                <h2 class="main-title">Inicia sesión</h2>
-                <input type="email" id="login-email" placeholder="Correo electrónico">
-                <input type="password" id="login-pass" placeholder="Contraseña">
-                <button class="btn-entrar" id="btn-login-manual">ENTRAR</button>
-                <div class="footer-links">
-                    <p>¿No tienes cuenta? <a href="javascript:void(0)" id="link-ir-a-registro">Registrarse</a></p>
-                </div>
-            </div>
-        </div>
+.view { position: absolute; width: 100%; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 90px 20px 40px; box-sizing: border-box; opacity: 0; pointer-events: none; transition: 0.3s; }
+.view.active { opacity: 1; pointer-events: all; }
 
-        <div id="pantalla-registro" class="view">
-            <div class="form-container">
-                <div class="dni-visual-box">
-                    <img src="documento.png" class="dni-fondo-img">
-                    <div class="datos-superpuestos">
-                        <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
-                        <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
-                        <div class="txt-dni pos-nombre" id="txt-nombre">NOMBRE</div>
-                        <div class="txt-dni pos-dni" id="txt-dni">00.000.000</div>
-                        <div class="txt-dni pos-nac" id="txt-nac">01 ENE 2007</div>
-                        <div class="txt-dni pos-emi" id="txt-emi">19 ENE 2021</div>
-                        <div class="txt-dni pos-ven" id="txt-ven">19 ENE 2036</div>
-                        <div class="txt-dni pos-sexo" id="txt-sexo">M</div>
-                        <img id="img-firma-preview" class="pos-firma">
-                    </div>
-                </div>
+.dni-visual-box { position: relative; width: 100%; max-width: 340px; aspect-ratio: 1.58 / 1; background: #eee; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.dni-fondo-img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.datos-superpuestos { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
 
-                <input type="text" id="in-apellido" placeholder="Apellido">
-                <input type="text" id="in-nombre" placeholder="Nombre">
-                <input type="text" id="in-dni" placeholder="DNI (con puntos)">
-                <div class="grid-2">
-                    <input type="text" id="in-nac" placeholder="Nacimiento">
-                    <input type="text" id="in-emi" placeholder="Emisión">
-                </div>
-                <input type="text" id="in-ven" placeholder="Vencimiento">
-                <select id="in-sexo">
-                    <option value="M">Masculino</option>
-                    <option value="F">Femenino</option>
-                </select>
+.txt-dni { position: absolute; color: #000; font-family: Arial, sans-serif; font-weight: 400; text-transform: uppercase; white-space: nowrap; }
 
-                <div class="firma-box">
-                    <canvas id="canvas-firma"></canvas>
-                    <button id="btn-limpiar-firma" class="btn-clear">Limpiar</button>
-                </div>
+/* CALIBRACIÓN SOLICITADA */
+.pos-foto { position: absolute; top: 22%; left: 6%; width: 23%; height: 48%; object-fit: cover; }
 
-                <button class="btn-foto-local" id="btn-trigger-foto">Seleccionar Foto</button>
-                <input type="file" id="file-foto" style="display:none" accept="image/*">
-                <hr>
-                <input type="email" id="reg-email" placeholder="Email">
-                <input type="password" id="reg-pass" placeholder="Contraseña">
-                <button class="btn-entrar" id="btn-crear-cuenta">REGISTRARME</button>
-            </div>
-        </div>
-    </div>
+.pos-apellido { top: 20%; left: 30%; font-size: 16px; }
+.pos-nombre   { top: 30%; left: 30%; font-size: 16px; }
+.pos-sexo     { top: 40%; left: 30%; font-size: 16px; }
+.pos-nac      { top: 50%; left: 30%; font-size: 16px; letter-spacing: .2px; }
+.pos-emi      { top: 60%; left: 30%; font-size: 16px; letter-spacing: .2px; }
+.pos-ven      { top: 70%; left: 30%; font-size: 16px; letter-spacing: .2px; }
 
-    <script type="module" src="script.js"></script>
-</body>
-</html>
+/* Nueva posición DNI y estilo de inspección */
+.pos-dni { 
+    top: 83%;     /* Posición pedida */
+    left: 4%;     /* Posición pedida */
+    font-size: 22px; 
+    font-weight: 600; 
+    letter-spacing: -0.5px; 
+}
+
+.pos-firma { position: absolute; bottom: 22%; right: 12%; width: 22%; filter: grayscale(1); }
+
+/* UI */
+input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+.btn-entrar { background: #362FC1; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
