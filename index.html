@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Argentina</title>
-    
-    <link rel="icon" type="image/png" href="logito.png?v=1.1">
-    <link rel="apple-touch-icon" href="logito.png?v=1.1">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="logito.png">
+    <link rel="apple-touch-icon" href="logito.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="header-violeta">
         <div id="header-inicio" class="header-content">
-            <img src="logo.png?v=1.1" alt="Logo" class="logo-app">
+            <img src="logo.png" alt="Logo Mi Argentina" class="logo-app">
         </div>
         <div id="header-registro" class="header-content" style="display:none;">
             <button class="btn-back" onclick="irALogin()">←</button>
@@ -31,15 +27,16 @@
                 <input type="email" id="login-email" placeholder="Correo electrónico">
                 <input type="password" id="login-pass" placeholder="Contraseña">
                 <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
-                <p class="footer-links">¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
+                <div class="footer-links">
+                    <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
+                </div>
             </div>
         </div>
 
         <div id="pantalla-registro" class="view">
             <div class="form-container">
                 <div class="dni-visual-box">
-                    <img src="dni.png?v=1.1" class="dni-fondo-img">
-                    
+                    <img id="img-dni-fondo" src="dni.png" class="dni-fondo-img">
                     <div class="datos-superpuestos">
                         <img id="dni-foto-perfil" src="https://via.placeholder.com/100x130?text=FOTO" class="pos-foto">
                         <div class="txt-dni pos-apellido" id="txt-apellido">APELLIDO</div>
@@ -52,7 +49,6 @@
                     </div>
                 </div>
 
-                <p class="instruccion">Completa los datos</p>
                 <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
                 <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
                 <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
@@ -66,7 +62,6 @@
                 </select>
 
                 <div class="firma-box">
-                    <label>Firma</label>
                     <canvas id="canvas-firma"></canvas>
                     <button class="btn-clear" onclick="limpiarFirma()">Limpiar</button>
                 </div>
@@ -76,20 +71,7 @@
                 
                 <hr>
                 <input type="email" id="reg-email" placeholder="Email">
-                <input type="password" id="reg-pass" placeholder="Contraseña (mín 6)">
+                <input type="password" id="reg-pass" placeholder="Contraseña">
                 <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
             </div>
         </div>
-
-        <div id="pantalla-home" class="view">
-            <div class="form-container">
-                <h2 class="main-title">Mis Documentos</h2>
-                <div id="visual-final-dni"></div>
-                <button class="btn-entrar" style="background:#666; margin-top:20px;" onclick="location.reload()">SALIR</button>
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="script.js"></script>
-</body>
-</html>
