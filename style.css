@@ -2,24 +2,16 @@ body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sa
 .view { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
 .form-container { width: 100%; max-width: 320px; text-align: center; }
 
-.main-title { 
-    font-size: 20px; font-weight: 500; color: #8e8e8e; 
-    margin: 10px 40px 30px; 
-}
+.main-title { font-size: 20px; font-weight: 500; color: #8e8e8e; margin: 10px 40px 30px; }
 
-/* CAJAS DE TEXTO ESTILO IMAGEN */
 input { 
-    width: 100%; font-size: 16px; 
-    padding: 12px 0 12px 10px; 
-    background-color: #fafafa; 
-    border: 1px solid #ccc; /* Borde inicial gris */
-    border-radius: 4px; 
-    margin-bottom: 20px; 
-    outline: none; box-sizing: border-box; color: #333;
-    transition: border 0.3s;
+    width: 100%; font-size: 16px; padding: 12px 10px; 
+    background-color: #fafafa; border: 1px solid #ccc; 
+    border-radius: 4px; margin-bottom: 20px; outline: none; 
+    box-sizing: border-box; transition: border 0.3s;
 }
 
-/* Colores de validación */
+/* Colores de validación en vivo */
 input.invalid { border: 2px solid red !important; }
 input.valid { border: 2px solid #4CAF50 !important; }
 
@@ -27,13 +19,7 @@ input.valid { border: 2px solid #4CAF50 !important; }
     background: #b7b1ff; color: #fff; border: none; width: 100%; 
     padding: 16px; border-radius: 12px; font-weight: bold; 
     font-size: 15px; cursor: pointer; text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(183,177,255,0.3); 
 }
 
 .footer-links { margin-top: 20px; font-size: 13px; color: #5555ff; }
 .footer-links a { text-decoration: none; color: inherit; }
-
-/* Estilo Credencial */
-.header-azul { background: #0072bb; color: #fff; padding: 50px 20px 15px; position: fixed; top: 0; width: 100%; font-weight: bold; z-index: 100; }
-.app-view { background: #f2f5f7; padding-top: 100px; }
-.dni-card { background: #fff; width: 100%; max-width: 340px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); overflow: hidden; }
