@@ -8,12 +8,8 @@ input {
     width: 100%; font-size: 16px; padding: 12px 10px; 
     background-color: #fafafa; border: 1px solid #ccc; 
     border-radius: 4px; margin-bottom: 20px; outline: none; 
-    box-sizing: border-box; transition: border 0.3s;
+    box-sizing: border-box; transition: all 0.2s ease;
 }
-
-/* Colores de validación en vivo */
-input.invalid { border: 2px solid red !important; }
-input.valid { border: 2px solid #4CAF50 !important; }
 
 .btn-lila { 
     background: #b7b1ff; color: #fff; border: none; width: 100%; 
