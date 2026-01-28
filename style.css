@@ -1,15 +1,19 @@
 body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sans-serif; background: #fff; overflow-x: hidden; }
 
-/* BARRA SUPERIOR */
 .header-violeta {
     background-color: #362FC1; 
     width: 100%; height: 70px;
     display: flex; align-items: center; justify-content: center;
     position: fixed; top: 0; left: 0; z-index: 1000;
 }
-.logo-app { height: 35px; filter: brightness(0) invert(1); }
 
-/* SISTEMA DE VISTAS Y TRANSICIONES */
+/* LOGO PERSONALIZADO: Ajustado para que se vea con sus colores originales */
+.logo-app { 
+    height: 45px; 
+    width: auto; 
+    object-fit: contain; 
+}
+
 .view {
     position: absolute; width: 100%; min-height: 100vh;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -19,10 +23,7 @@ body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sa
     transform: translateY(10px);
 }
 
-.view.active {
-    opacity: 1; pointer-events: all;
-    transform: translateY(0);
-}
+.view.active { opacity: 1; pointer-events: all; transform: translateY(0); }
 
 .form-container { width: 100%; text-align: center; }
 @media (min-width: 768px) { .form-container { max-width: 350px; padding: 40px; border: 1px solid #eee; border-radius: 20px; } }
