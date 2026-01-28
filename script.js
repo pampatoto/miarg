@@ -38,6 +38,7 @@ window.cargarFoto = (e) => {
     reader.readAsDataURL(e.target.files[0]);
 };
 
+// Firma
 const canvas = document.getElementById('canvas-firma');
 const ctx = canvas.getContext('2d');
 let dib = false;
@@ -56,20 +57,9 @@ window.addEventListener('mouseup', stop); window.addEventListener('touchend', st
 canvas.addEventListener('mousemove', draw); canvas.addEventListener('touchmove', draw);
 
 window.crearCuenta = async () => {
-    const email = document.getElementById('reg-email').value;
-    const pass = document.getElementById('reg-pass').value;
     try {
-        await createUserWithEmailAndPassword(auth, email, pass);
+        await createUserWithEmailAndPassword(auth, document.getElementById('reg-email').value, document.getElementById('reg-pass').value);
         alert("¡Registro exitoso!");
-        navegar('pantalla-home');
+        location.reload();
     } catch (e) { alert("Error al registrar"); }
-};
-
-window.intentarEntrar = async () => {
-    const email = document.getElementById('login-email').value;
-    const pass = document.getElementById('login-pass').value;
-    try {
-        await signInWithEmailAndPassword(auth, email, pass);
-        navegar('pantalla-home');
-    } catch (e) { alert("Datos incorrectos"); }
 };
