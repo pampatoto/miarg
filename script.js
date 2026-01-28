@@ -13,7 +13,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const aplicarValidacion = (id, condicion) => {
+// VALIDACIÓN ROJO/VERDE
+const validar = (id, condicion) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener('input', () => {
@@ -22,8 +23,12 @@ const aplicarValidacion = (id, condicion) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    aplicarValidacion('login-email', val => val.includes('@') && val.includes('.'));
-    aplicarValidacion('login-pass', val => val.length >= 6);
+    validar('login-email', val => val.includes('@') && val.includes('.'));
+    validar('login-pass', val => val.length >= 6);
+    if(document.getElementById('reg-email')) {
+        validar('reg-email', val => val.includes('@') && val.includes('.'));
+        validar('reg-pass', val => val.length >= 6);
+    }
 });
 
 window.mostrarRegistro = () => {
