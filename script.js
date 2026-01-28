@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
-// Configuración de tu Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDntkOBeYnBVBE0DLZ0vPkO2LrLdG-WqUQ",
   authDomain: "miarg-proyecto.firebaseapp.com",
@@ -14,128 +13,70 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// --- UTILIDADES ---
-
-// Función para cambiar de pantalla sin scroll
 const navegar = (id) => {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    const destino = document.getElementById(id);
-    if (destino) destino.classList.add('active');
+    document.getElementById(id).classList.add('active');
 };
 
-// Función para poner puntos al DNI automáticamente (Inspección: image_7acb61.png)
-const formatearDNI = (val) => {
-    return val.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-
-// --- LÓGICA PRINCIPAL ---
-
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Navegación inicial
-    document.getElementById('link-ir-a-registro').addEventListener('click', (e) => {
+document.addEventListener('DOMContentLoaded', (// Dentro del DOMContentLoaded agregar:
+document.getElementById('btn-seccion-documentos').addEventListener('click', () => {
+    navegar('pantalla-ver-dni');
+});) => {
+    // 1. Navegación
+    document.getElementById('link-ir-a-registro').onclick = (e) => {
         e.preventDefault();
         navegar('pantalla-registro');
-    });
+    };
 
-    // 2. Actualización de datos en vivo (DNI con puntos)
-    document.getElementById('in-dni').addEventListener('input', (e) => {
-        const conPuntos = formatearDNI(e.target.value);
-        document.getElementById('txt-dni').innerText = conPuntos || "00.000.000";
-    });
+    // 2. Formateo DNI
+    const inDni = document.getElementById('in-dni');
+    inDni.oninput = (e) => {
+        let val = e.target.value.replace(/\D/g, "");
+        document.getElementById('txt-dni').innerText = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    };
 
-    document.getElementById('in-apellido').addEventListener('input', (e) => {
-        document.getElementById('txt-apellido').innerText = e.target.value.toUpperCase() || "APELLIDO";
-    });
-
-    document.getElementById('in-nombre').addEventListener('input', (e) => {
-        document.getElementById('txt-nombre').innerText = e.target.value.toUpperCase() || "NOMBRE";
-    });
-
-    // 3. Manejo de Foto de Perfil
-    document.getElementById('btn-trigger-foto').addEventListener('click', () => {
-        document.getElementById('file-foto').click();
-    });
-
-    document.getElementById('file-foto').addEventListener('change', (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            document.getElementById('dni-foto-perfil').src = reader.result;
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    });
-
-    // 4. Firma en recuadro pequeño (Inspección: image_87fe60.png)
+    // 3. Firma (Ajuste para que aparezca)
     const canvas = document.getElementById('canvas-firma');
     const ctx = canvas.getContext('2d');
-    let dibujando = false;
+    let dib = false;
 
-    const obtenerPos = (e) => {
+    const funcEmpezar = (e) => { e.preventDefault(); dib = true; ctx.beginPath(); };
+    const funcMover = (e) => {
+        if (!dib) return;
         const rect = canvas.getBoundingClientRect();
-        return {
-            x: (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left,
-            y: (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top
-        };
+        const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left;
+        const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top;
+        ctx.lineWidth = 2; ctx.lineTo(x, y); ctx.stroke();
     };
 
-    const empezar = (e) => { e.preventDefault(); dibujando = true; ctx.beginPath(); };
-    const terminar = () => { dibujando = false; };
-    const mover = (e) => {
-        if (!dibujando) return;
-        const p = obtenerPos(e);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#000';
-        ctx.lineTo(p.x, p.y);
-        ctx.stroke();
-    };
+    canvas.addEventListener('mousedown', funcEmpezar);
+    canvas.addEventListener('touchstart', funcEmpezar);
+    window.addEventListener('mouseup', () => dib = false);
+    window.addEventListener('touchend', () => dib = false);
+    canvas.addEventListener('mousemove', funcMover);
+    canvas.addEventListener('touchmove', funcMover);
 
-    canvas.addEventListener('mousedown', empezar);
-    canvas.addEventListener('touchstart', empezar);
-    window.addEventListener('mouseup', terminar);
-    window.addEventListener('touchend', terminar);
-    canvas.addEventListener('mousemove', mover);
-    canvas.addEventListener('touchmove', mover);
-
-    document.getElementById('btn-limpiar-firma').addEventListener('click', () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    // 5. REGISTRO Y SALTO AL MENÚ PRINCIPAL
-    document.getElementById('btn-crear-cuenta').addEventListener('click', async () => {
-        const email = document.getElementById('reg-email').value;
+    // 4. EL BOTÓN QUE NO FUNCIONABA
+    document.getElementById('btn-crear-cuenta').onclick = async () => {
+        const mail = document.getElementById('reg-email').value;
         const pass = document.getElementById('reg-pass').value;
 
-        if (!email || !pass) {
-            alert("Por favor completa email y contraseña");
-            return;
-        }
+        if(!mail || !pass) return alert("Completa los datos de la cuenta");
 
         try {
-            await createUserWithEmailAndPassword(auth, email, pass);
-            
-            // Pasamos los datos cargados a la pantalla de Inicio de la App
-            document.getElementById('final-apellido').innerText = document.getElementById('in-apellido').value.toUpperCase();
-            document.getElementById('final-nombre').innerText = document.getElementById('in-nombre').value.toUpperCase();
-            document.getElementById('final-dni').innerText = formatearDNI(document.getElementById('in-dni').value);
-            document.getElementById('final-foto').src = document.getElementById('dni-foto-perfil').src;
-
-            alert("¡Registro Exitoso!");
-            navegar('pantalla-inicio-app'); // Salto directo al Menú
-            
-        } catch (error) {
-            alert("Error al registrar: " + error.message);
-        }
-    });
-
-    // 6. Login Manual
-    document.getElementById('btn-login-manual').addEventListener('click', async () => {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-pass').value;
-        try {
-            await signInWithEmailAndPassword(auth, email, pass);
+            await createUserWithEmailAndPassword(auth, mail, pass);
+            alert("¡Registrado!");
             navegar('pantalla-inicio-app');
-        } catch (error) {
-            alert("Credenciales incorrectas");
+        } catch (err) {
+            alert("Error: " + err.message);
         }
-    });
+    };
+
+    // Foto
+    document.getElementById('btn-trigger-foto').onclick = () => document.getElementById('file-foto').click();
+    document.getElementById('file-foto').onchange = (e) => {
+        const reader = new FileReader();
+        reader.onload = () => document.getElementById('dni-foto-perfil').src = reader.result;
+        reader.readAsDataURL(e.target.files[0]);
+    };
 });
