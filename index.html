@@ -12,7 +12,7 @@
 
     <div class="header-violeta">
         <div id="header-inicio" class="header-content">
-            <img src="logo.png" alt="Logo Mi Argentina" class="logo-app">
+            <img src="logo.png" alt="Logo" class="logo-app">
         </div>
         <div id="header-registro" class="header-content" style="display:none;">
             <button class="btn-back" onclick="irALogin()">←</button>
@@ -27,9 +27,7 @@
                 <input type="email" id="login-email" placeholder="Correo electrónico">
                 <input type="password" id="login-pass" placeholder="Contraseña">
                 <button class="btn-entrar" onclick="intentarEntrar()">ENTRAR</button>
-                <div class="footer-links">
-                    <p>¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
-                </div>
+                <p class="footer-links">¿No tienes cuenta? <a href="javascript:void(0)" onclick="irARegistro()">Registrarse</a></p>
             </div>
         </div>
 
@@ -52,10 +50,12 @@
                 <input type="text" id="in-apellido" placeholder="Apellido" oninput="actualizar()">
                 <input type="text" id="in-nombre" placeholder="Nombre" oninput="actualizar()">
                 <input type="text" id="in-dni" placeholder="DNI" oninput="actualizar()">
+                
                 <div class="grid-2">
                     <input type="text" id="in-nac" placeholder="Nacimiento" oninput="actualizar()">
                     <input type="text" id="in-emi" placeholder="Emisión" oninput="actualizar()">
                 </div>
+                
                 <select id="in-sexo" onchange="actualizar()">
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
@@ -75,3 +75,8 @@
                 <button class="btn-entrar" onclick="crearCuenta()">REGISTRARME</button>
             </div>
         </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
