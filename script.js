@@ -23,7 +23,6 @@ const navegar = (id) => {
 window.irARegistro = () => navegar('pantalla-registro');
 window.irALogin = () => navegar('pantalla-login');
 
-// ACTUALIZACIÓN EN VIVO
 window.actualizar = () => {
     document.getElementById('txt-apellido').innerText = document.getElementById('in-apellido').value || "APELLIDO";
     document.getElementById('txt-nombre').innerText = document.getElementById('in-nombre').value || "NOMBRE";
@@ -39,23 +38,19 @@ window.cargarFoto = (e) => {
     reader.readAsDataURL(e.target.files[0]);
 };
 
-// FIRMA
+// Firma
 const canvas = document.getElementById('canvas-firma');
 const ctx = canvas.getContext('2d');
 let dibujando = false;
 
-const start = (e) => { dibujando = true; draw(e); };
-const stop = () => { 
-    dibujando = false; 
-    ctx.beginPath();
-    document.getElementById('img-firma-preview').src = canvas.toDataURL(); // Pasa la firma al DNI
-};
+const start = (e) => { e.preventDefault(); dibujando = true; draw(e); };
+const stop = () => { dibujando = false; ctx.beginPath(); document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
 const draw = (e) => {
     if (!dibujando) return;
     ctx.lineWidth = 2; ctx.strokeStyle = '#000';
     const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX || e.touches[0].clientX) - rect.left;
-    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left;
+    const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top;
     ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
 };
 
@@ -66,15 +61,26 @@ window.addEventListener('touchend', stop);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('touchmove', draw);
 
-window.limpiarFirma = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); document.getElementById('img-firma-preview').src = ""; };
+window.limpiarFirma = () => { 
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    document.getElementById('img-firma-preview').src = ""; 
+};
 
-// FIREBASE
 window.crearCuenta = async () => {
     const email = document.getElementById('reg-email').value;
     const pass = document.getElementById('reg-pass').value;
     try {
         await createUserWithEmailAndPassword(auth, email, pass);
-        document.getElementById('visual-final-dni').innerHTML = document.querySelector('.dni-visual-box').outerHTML;
-        navegar('pantalla-home');
+        alert("¡Registro exitoso!");
+        location.reload();
     } catch (e) { alert("Error al registrar"); }
+};
+
+window.intentarEntrar = async () => {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        alert("¡Ingreso exitoso!");
+    } catch (e) { alert("Datos incorrectos"); }
 };
