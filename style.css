@@ -2,15 +2,27 @@ body, html { margin: 0; padding: 0; height: 100%; font-family: -apple-system, sa
 .view { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; box-sizing: border-box; }
 .form-container { width: 100%; max-width: 300px; text-align: center; }
 
-/* AJUSTE SOLICITADO PARA EL TÍTULO */
 .main-title { 
     font-size: 20px; 
     font-weight: 500; 
     color: #8e8e8e; 
-    margin: 10px 40px 30px; /* Superior 10px, Laterales 40px, Inferior 30px */
+    margin: 10px 40px 30px; 
 }
 
-input { width: 100%; border: none; border-bottom: 1px solid #eee; padding: 12px 0; margin-bottom: 15px; font-size: 16px; outline: none; }
+/* ESTILOS DE LOS INPUTS PERSONALIZADOS */
+input { 
+    width: 100%; 
+    font-size: 16px; 
+    padding: 9px 0 7px 8px; 
+    background-color: #fafafa; 
+    border: 2px solid red; /* Borde de error solicitado */
+    border-radius: 8px; /* Redondeado suave para que coincida con la estética */
+    margin-bottom: 15px; 
+    outline: none; 
+    box-sizing: border-box; 
+    color: #333;
+}
+
 .btn-lila { background: #b7b1ff; color: #fff; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(183,177,255,0.3); }
 .footer-links { margin-top: 20px; font-size: 14px; }
 .footer-links a { color: #5555ff; text-decoration: none; }
