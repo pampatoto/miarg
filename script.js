@@ -13,41 +13,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// FUNCIÓN DE NAVEGACIÓN REFORZADA
 const navegar = (id) => {
-    console.log("Navegando a: " + id);
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-    
-    const headerInicio = document.getElementById('header-inicio');
-    const headerRegistro = document.getElementById('header-registro');
-    
-    if(id === 'pantalla-login') {
-        headerInicio.style.display = 'flex';
-        headerRegistro.style.display = 'none';
-    } else {
-        headerInicio.style.display = 'none';
-        headerRegistro.style.display = 'flex';
-    }
-    
+    document.getElementById('header-inicio').style.display = (id === 'pantalla-login' ? 'flex' : 'none');
+    document.getElementById('header-registro').style.display = (id === 'pantalla-registro' ? 'flex' : 'none');
     const destino = document.getElementById(id);
     if(destino) destino.classList.add('active');
 };
 
-// ASIGNACIÓN MANUAL DE BOTONES (Garantiza que funcione en cel)
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Botón ir a Registro
+    // Botones de Navegación
     document.getElementById('link-ir-a-registro').addEventListener('click', (e) => {
         e.preventDefault();
         navegar('pantalla-registro');
     });
 
-    // Botón volver a Login
     document.getElementById('btn-atras-manual').addEventListener('click', () => {
         navegar('pantalla-login');
     });
 
-    // Actualización de datos en vivo
+    // Actualización de datos
     const inputs = ['in-apellido', 'in-nombre', 'in-dni', 'in-nac', 'in-emi', 'in-sexo'];
     inputs.forEach(id => {
         document.getElementById(id).addEventListener('input', () => {
@@ -60,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Manejo de Foto
+    // Foto
     document.getElementById('btn-trigger-foto').addEventListener('click', () => {
         document.getElementById('file-foto').click();
     });
@@ -71,20 +56,20 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(e.target.files[0]);
     });
 
-    // Firma (Canvas)
+    // Canvas Firma
     const canvas = document.getElementById('canvas-firma');
     const ctx = canvas.getContext('2d');
     let dib = false;
 
-    const start = (e) => { e.preventDefault(); dib = true; draw(e); };
-    const stop = () => { dib = false; ctx.beginPath(); document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
+    const start = (e) => { e.preventDefault(); dib = true; ctx.beginPath(); };
+    const stop = () => { dib = false; document.getElementById('img-firma-preview').src = canvas.toDataURL(); };
     const draw = (e) => {
         if (!dib) return;
         ctx.lineWidth = 2; ctx.strokeStyle = '#000';
         const rect = canvas.getBoundingClientRect();
         const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - rect.left;
         const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - rect.top;
-        ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+        ctx.lineTo(x, y); ctx.stroke();
     };
 
     canvas.addEventListener('mousedown', start);
@@ -97,5 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-limpiar-firma').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         document.getElementById('img-firma-preview').src = "";
+    });
+
+    // Registro Firebase
+    document.getElementById('btn-crear-cuenta').addEventListener('click', async () => {
+        try {
+            await createUserWithEmailAndPassword(auth, document.getElementById('reg-email').value, document.getElementById('reg-pass').value);
+            alert("¡Registro exitoso!");
+            location.reload();
+        } catch (e) { alert("Error al registrar"); }
     });
 });
